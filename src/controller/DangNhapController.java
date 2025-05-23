@@ -5,7 +5,8 @@ import view.DangNhapView;
 import dao.NguoiDungDAO;
 
 import java.sql.SQLException;
-import javafx.scene.control.Alert;
+
+import util.ThongBaoUtil;
 
 public class DangNhapController {
     private DangNhapView view;
@@ -31,22 +32,14 @@ public class DangNhapController {
             NguoiDung user = nguoiDungDAO.xacThuc(tenDangNhap, matKhau);
 
             if (user != null) {
-                showAlert("Thành công",
+                ThongBaoUtil.thongTin("Thành công",
                         "Đăng nhập thành công! Xin chào " + user.getTenDangNhap() + " (" + user.getVaiTro() + ")");
             } else {
                 view.getMessageLabel().setText("Sai tên đăng nhập hoặc mật khẩu.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Lỗi", "Lỗi kết nối cơ sở dữ liệu: " + e.getMessage());
+            ThongBaoUtil.baoLoi("Lỗi", "Lỗi kết nối cơ sở dữ liệu: " + e.getMessage());
         }
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

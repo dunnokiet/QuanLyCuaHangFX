@@ -16,8 +16,8 @@ public class DangNhapView {
     private Label messageLabel;
 
     public DangNhapView() {
-        view = new VBox(24);
-        view.setPadding(new Insets(8));
+        view = new VBox(8);
+        view.setPadding(new Insets(24));
         view.setAlignment(Pos.CENTER);
 
         Label titleLabel = new Label("Hẹ Thống Quản Lý Cửa Hàng Bán Lẻ");
