@@ -1,15 +1,15 @@
 package model;
 
-public class NguoiDung {
+public class NguoiDungModel {
     private String maNguoiDung;
     private String tenDangNhap;
     private String matKhau;
     private String vaiTro;
 
-    public NguoiDung() {
+    public NguoiDungModel() {
     }
 
-    public NguoiDung(String maNguoiDung, String tenDangNhap, String matKhau, String vaiTro) {
+    public NguoiDungModel(String maNguoiDung, String tenDangNhap, String matKhau, String vaiTro) {
         this.maNguoiDung = maNguoiDung;
         this.tenDangNhap = tenDangNhap;
         this.matKhau = matKhau;

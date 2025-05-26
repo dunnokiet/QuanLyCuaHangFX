@@ -1,14 +1,16 @@
 package dao;
 
-import model.NguoiDung;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import model.NguoiDungModel;
+import util.DatabaseConnection;
+
 import java.sql.PreparedStatement;
 
 public class NguoiDungDAO {
-    public NguoiDung xacThuc(String tenDangNhap, String matKhau) throws SQLException {
+    public NguoiDungModel dangNhap(String tenDangNhap, String matKhau) throws SQLException {
         String sql = "SELECT * FROM NguoiDung WHERE ten_dang_nhap = ? AND mat_khau = ?";
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -16,7 +18,7 @@ public class NguoiDungDAO {
             pstmt.setString(2, matKhau);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                return new NguoiDung(
+                return new NguoiDungModel(
                         rs.getString("ma_nguoi_dung"),
                         rs.getString("ten_dang_nhap"),
                         rs.getString("mat_khau"),

@@ -1,19 +1,22 @@
+import view.DangNhapView;
 import controller.DangNhapController;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import view.DangNhapView;
+import model.NguoiDungModel;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        DangNhapView view = new DangNhapView();
-        new DangNhapController(view);
+        NguoiDungModel nguoiDungModel = new NguoiDungModel();
+        DangNhapView dangNhapView = new DangNhapView();
+        new DangNhapController(dangNhapView, nguoiDungModel, primaryStage);
 
-        Scene scene = new Scene(view.getView(), 400, 200);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("MVC JavaFX Example");
+        primaryStage.setScene(new Scene(dangNhapView, 400, 300));
+        primaryStage.setTitle("Đăng nhập - Hệ Thống Quản Lý Cửa Hàng");
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

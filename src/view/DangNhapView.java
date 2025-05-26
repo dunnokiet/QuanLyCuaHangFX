@@ -7,54 +7,60 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
-public class DangNhapView {
-    private VBox view;
-    private TextField tenDangNhapField;
-    private PasswordField matKhauField;
-    private Button loginButton;
-    private Label messageLabel;
+public class DangNhapView extends VBox {
+    private TextField txtTenDangNhap;
+    private PasswordField pwdMatKhau;
+    private Button btnDangNhap;
+    private Label lblThongBao;
 
     public DangNhapView() {
-        view = new VBox(8);
-        view.setPadding(new Insets(24));
-        view.setAlignment(Pos.CENTER);
+        setAlignment(Pos.CENTER);
+        setSpacing(8);
+        setPadding(new Insets(24));
+        setStyle("-fx-background-color: #ffffff;");
 
-        Label titleLabel = new Label("Hẹ Thống Quản Lý Cửa Hàng Bán Lẻ");
+        Label lblTitle = new Label("Đăng nhập");
+        lblTitle.setFont(new Font("Arial", 20));
+        lblTitle.setStyle("-fx-text-fill: #333;");
 
-        tenDangNhapField = new TextField();
-        tenDangNhapField.setPromptText("Tên đăng nhập");
-        tenDangNhapField.setMaxWidth(200);
+        txtTenDangNhap = new TextField();
+        txtTenDangNhap.setPromptText("Tên đăng nhập");
+        txtTenDangNhap.setMaxWidth(250);
+        txtTenDangNhap.setStyle(
+                "-fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10; -fx-font-size: 14;");
 
-        matKhauField = new PasswordField();
-        matKhauField.setPromptText("Mật khẩu");
-        matKhauField.setMaxWidth(200);
+        pwdMatKhau = new PasswordField();
+        pwdMatKhau.setPromptText("Mật khẩu");
+        pwdMatKhau.setMaxWidth(250);
+        pwdMatKhau.setStyle(
+                "-fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10; -fx-font-size: 14;");
 
-        loginButton = new Button("Đăng nhập");
-        loginButton.setPrefWidth(100);
+        btnDangNhap = new Button("Đăng nhập");
+        btnDangNhap.setPrefWidth(250);
+        btnDangNhap.setStyle(
+                "-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-size: 14; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");
 
-        messageLabel = new Label();
+        lblThongBao = new Label("");
+        lblThongBao.setStyle("-fx-text-fill: #d32f2f; -fx-font-size: 12;");
 
-        view.getChildren().addAll(titleLabel, tenDangNhapField, matKhauField, loginButton, messageLabel);
+        getChildren().addAll(lblTitle, txtTenDangNhap, pwdMatKhau, btnDangNhap, lblThongBao);
     }
 
-    public VBox getView() {
-        return view;
+    public TextField getTxtTenDangNhap() {
+        return txtTenDangNhap;
     }
 
-    public TextField getTenDangNhapField() {
-        return tenDangNhapField;
+    public PasswordField getPwdMatKhau() {
+        return pwdMatKhau;
     }
 
-    public PasswordField getMatKhauField() {
-        return matKhauField;
+    public Button getBtnDangNhap() {
+        return btnDangNhap;
     }
 
-    public Button getLoginButton() {
-        return loginButton;
-    }
-
-    public Label getMessageLabel() {
-        return messageLabel;
+    public Label getLblThongBao() {
+        return lblThongBao;
     }
 }
