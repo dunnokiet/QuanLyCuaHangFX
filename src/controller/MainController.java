@@ -3,15 +3,16 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import QuanLyKhachHang.KhachHangModel;
+import QuanLyKhachHang.QuanLyKhachHangController;
+import QuanLyKhachHang.QuanLyKhachHangView;
 import controller.DonHang.QuanLyDonHangController;
-import controller.KhachHang.QuanLyKhachHangController;
 import controller.NguoiDung.QuanLyNguoiDungController;
 import controller.SanPham.QuanLySanPhamController;
 import controller.TrangChu.TrangChuController;
 import dto.DonHangDTO;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.KhachHangModel;
 import model.NguoiDungModel;
 import model.SanPhamModel;
 import util.ThongBaoUtil;
@@ -19,7 +20,6 @@ import view.DangNhapView;
 import view.MainView;
 import view.DonHang.ChiTietDonHangView;
 import view.DonHang.QuanLyDonHangView;
-import view.KhachHang.QuanLyKhachHangView;
 import view.NguoiDung.QuanLyNguoiDungView;
 import view.SanPham.QuanLySanPhamView;
 import view.TrangChu.TrangChuView;
@@ -86,7 +86,7 @@ public class MainController {
         });
 
         mainView.getBtnDonHang().setOnAction(_ -> {
-            mainView.setActiveButton(mainView.getBtnNguoiDung());
+            mainView.setActiveButton(mainView.getBtnDonHang());
 
             QuanLyDonHangView quanLyDonHangView = new QuanLyDonHangView();
             ChiTietDonHangView chiTietDonHangView = new ChiTietDonHangView();

@@ -10,55 +10,61 @@ import model.SanPhamModel;
 import util.ThongBaoUtil;
 import view.MainView;
 import view.DonHang.ChiTietDonHangView;
-import view.DonHang.TaoChiTietView;
+import view.DonHang.ChinhSuaChiTietView;
+import view.DonHang.ChinhSuaDonHangView;
 import view.DonHang.QuanLyDonHangView;
-import view.DonHang.TaoDonHangView;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import QuanLyKhachHang.KhachHangDAO;
 import QuanLyKhachHang.KhachHangModel;
 
-public class TaoDonHangController {
-    private TaoDonHangView taoDonHangView;
-    private TaoChiTietView taoChiTietView;
+public class ChinhSuaDonHangController {
+    private ChinhSuaDonHangView chinhSuaDonHangView;
+    private ChinhSuaChiTietView chinhSuaChiTietView;
     private MainView mainView;
+    private DonHangDTO donHangDTO;
     private DonHangDAO donHangDAO;
     private ChiTietDonHangDAO chiTietDonHangDAO;
     private SanPhamDAO sanPhamDAO;
     private KhachHangDAO khachHangDAO;
     private List<SanPhamModel> danhSachSanPham;
     private List<KhachHangModel> danhSachKhachHang;
+    private Map<String, Integer> originalSoLuong;
 
-    public TaoDonHangController(MainView mainView, TaoDonHangView taoDonHangView,
-            TaoChiTietView taoChiTietView) {
+    public ChinhSuaDonHangController(MainView mainView, ChinhSuaDonHangView chinhSuaDonHangView,
+            ChinhSuaChiTietView chinhSuaChiTietView,
+            DonHangDTO donHangDTO) {
         this.mainView = mainView;
-
-        this.taoDonHangView = taoDonHangView;
-        this.taoChiTietView = taoChiTietView;
-
+        this.chinhSuaDonHangView = chinhSuaDonHangView;
+        this.chinhSuaChiTietView = chinhSuaChiTietView;
+        this.donHangDTO = donHangDTO;
         this.donHangDAO = new DonHangDAO();
         this.chiTietDonHangDAO = new ChiTietDonHangDAO();
         this.sanPhamDAO = new SanPhamDAO();
         this.khachHangDAO = new KhachHangDAO();
         this.danhSachSanPham = new ArrayList<>();
         this.danhSachKhachHang = new ArrayList<>();
+        this.originalSoLuong = new HashMap<>();
 
         loadSanPham();
         loadKhachHang();
+        loadChiTietDonHang();
         initListeners();
     }
 
     private void loadSanPham() {
         try {
             danhSachSanPham = sanPhamDAO.layTatCaSanPham();
-            taoDonHangView.getTblSanPham().getItems().addAll(danhSachSanPham);
+            chinhSuaDonHangView.getTblSanPham().getItems().addAll(danhSachSanPham);
         } catch (SQLException e) {
             ThongBaoUtil.baoLoi("Lỗi", "Không thể tải danh sách sản phẩm: " + e.getMessage());
             e.printStackTrace();
@@ -68,7 +74,7 @@ public class TaoDonHangController {
     private void loadKhachHang() {
         try {
             danhSachKhachHang = khachHangDAO.layTatCaKhachHang();
-            taoChiTietView.getCbKhachHang().getItems().addAll(
+            chinhSuaChiTietView.getCbKhachHang().getItems().addAll(
                     danhSachKhachHang.stream()
                             .map(kh -> kh.getMaKhachHang() + " - " + kh.getTen())
                             .collect(Collectors.toList()));
@@ -79,34 +85,34 @@ public class TaoDonHangController {
     }
 
     private void initListeners() {
-        taoChiTietView.getTblChiTietDonHang().getSelectionModel().selectedItemProperty()
+        chinhSuaChiTietView.getTblChiTietDonHang().getSelectionModel().selectedItemProperty()
                 .addListener((_, _, newSelection) -> {
-                    taoDonHangView.getBtnBoSanPham().setDisable(newSelection == null);
-                    taoDonHangView.getBtnSuaSoLuong().setDisable(newSelection == null);
+                    chinhSuaDonHangView.getBtnBoSanPham().setDisable(newSelection == null);
+                    chinhSuaDonHangView.getBtnSuaSoLuong().setDisable(newSelection == null);
                 });
 
-        taoDonHangView.getTblSanPham().getSelectionModel().selectedItemProperty()
+        chinhSuaDonHangView.getTblSanPham().getSelectionModel().selectedItemProperty()
                 .addListener((_, _, newSelection) -> {
-                    taoDonHangView.getBtnThemSanPham().setDisable(newSelection == null);
+                    chinhSuaDonHangView.getBtnThemSanPham().setDisable(newSelection == null);
                 });
 
-        taoDonHangView.getTxtTimKiemSanPham().textProperty().addListener((_, _, newValue) -> {
+        chinhSuaDonHangView.getTxtTimKiemSanPham().textProperty().addListener((_, _, newValue) -> {
             if (newValue == null || newValue.trim().isEmpty()) {
-                taoDonHangView.getTblSanPham().getItems().clear();
-                taoDonHangView.getTblSanPham().getItems().addAll(danhSachSanPham);
+                chinhSuaDonHangView.getTblSanPham().getItems().clear();
+                chinhSuaDonHangView.getTblSanPham().getItems().addAll(danhSachSanPham);
             } else {
                 String lowerKeyword = newValue.toLowerCase();
                 List<SanPhamModel> filtered = danhSachSanPham.stream()
                         .filter(sp -> sp.getMaSanPham().toLowerCase().contains(lowerKeyword) ||
                                 sp.getTen().toLowerCase().contains(lowerKeyword))
                         .collect(Collectors.toList());
-                taoDonHangView.getTblSanPham().getItems().clear();
-                taoDonHangView.getTblSanPham().getItems().addAll(filtered);
+                chinhSuaDonHangView.getTblSanPham().getItems().clear();
+                chinhSuaDonHangView.getTblSanPham().getItems().addAll(filtered);
             }
         });
 
-        taoDonHangView.getBtnThemSanPham().setOnAction(_ -> {
-            SanPhamModel sanPham = taoDonHangView.getTblSanPham().getSelectionModel().getSelectedItem();
+        chinhSuaDonHangView.getBtnThemSanPham().setOnAction(_ -> {
+            SanPhamModel sanPham = chinhSuaDonHangView.getTblSanPham().getSelectionModel().getSelectedItem();
             if (sanPham == null)
                 return;
 
@@ -129,26 +135,32 @@ public class TaoDonHangController {
                     return;
                 }
 
-                if (soLuong > sanPham.getSoLuongTon()) {
+                int soLuongHienTai = chinhSuaChiTietView.getTblChiTietDonHang().getItems().stream()
+                        .filter(ct -> ct.getTenSanPham().equals(sanPham.getTen()))
+                        .mapToInt(ChiTietDonHangDTO::getSoLuong)
+                        .sum();
+                int soLuongTonHieuLuc = sanPham.getSoLuongTon()
+                        + (originalSoLuong.getOrDefault(sanPham.getMaSanPham(), 0) - soLuongHienTai);
+                if (soLuong > soLuongTonHieuLuc) {
                     ThongBaoUtil.canhBao("Cảnh báo",
-                            "Số lượng tồn kho không đủ! Hiện tại chỉ có: " + sanPham.getSoLuongTon());
+                            "Số lượng tồn kho không đủ! Hiện tại chỉ có: " + soLuongTonHieuLuc);
                     return;
                 }
 
                 sanPham.setSoLuongTon(sanPham.getSoLuongTon() - soLuong);
                 ChiTietDonHangDTO chiTiet = new ChiTietDonHangDTO(sanPham.getTen(), soLuong, sanPham.getGia());
-                taoChiTietView.getTblChiTietDonHang().getItems().add(chiTiet);
+                chinhSuaChiTietView.getTblChiTietDonHang().getItems().add(chiTiet);
 
                 updateTongTien();
-                taoDonHangView.getTblSanPham().refresh();
+                chinhSuaDonHangView.getTblSanPham().refresh();
             });
         });
 
-        taoDonHangView.getBtnBoSanPham().setOnAction(_ -> {
-            ChiTietDonHangDTO selected = taoChiTietView.getTblChiTietDonHang().getSelectionModel()
+        chinhSuaDonHangView.getBtnBoSanPham().setOnAction(_ -> {
+            ChiTietDonHangDTO selected = chinhSuaChiTietView.getTblChiTietDonHang().getSelectionModel()
                     .getSelectedItem();
             if (selected != null) {
-                taoChiTietView.getTblChiTietDonHang().getItems().remove(selected);
+                chinhSuaChiTietView.getTblChiTietDonHang().getItems().remove(selected);
 
                 for (SanPhamModel sp : danhSachSanPham) {
                     if (sp.getTen().equals(selected.getTenSanPham())) {
@@ -158,12 +170,12 @@ public class TaoDonHangController {
                 }
 
                 updateTongTien();
-                taoDonHangView.getTblSanPham().refresh();
+                chinhSuaDonHangView.getTblSanPham().refresh();
             }
         });
 
-        taoDonHangView.getBtnSuaSoLuong().setOnAction(_ -> {
-            ChiTietDonHangDTO selected = taoChiTietView.getTblChiTietDonHang().getSelectionModel()
+        chinhSuaDonHangView.getBtnSuaSoLuong().setOnAction(_ -> {
+            ChiTietDonHangDTO selected = chinhSuaChiTietView.getTblChiTietDonHang().getSelectionModel()
                     .getSelectedItem();
             if (selected == null)
                 return;
@@ -208,56 +220,54 @@ public class TaoDonHangController {
                 selected.setSoLuong(soLuongMoi);
 
                 updateTongTien();
-                taoDonHangView.getTblSanPham().refresh();
-                taoChiTietView.getTblChiTietDonHang().refresh();
+                chinhSuaDonHangView.getTblSanPham().refresh();
+                chinhSuaChiTietView.getTblChiTietDonHang().refresh();
             });
         });
 
-        taoChiTietView.getBtnTao().setOnAction(_ -> {
+        chinhSuaChiTietView.getBtnLuu().setOnAction(_ -> {
+            String khachHangSelection = chinhSuaChiTietView.getCbKhachHang().getValue();
+            String ngayDatStr = chinhSuaChiTietView.getTxtNgayDat().getText();
+            String trangThai = chinhSuaChiTietView.getCbTrangThai().getValue();
+            List<ChiTietDonHangDTO> chiTietList = chinhSuaChiTietView.getChiTietDonHangList();
+
+            if (khachHangSelection == null || khachHangSelection.trim().isEmpty() ||
+                    ngayDatStr == null || ngayDatStr.trim().isEmpty() ||
+                    trangThai == null) {
+                ThongBaoUtil.canhBao("Cảnh báo", "Vui lòng điền đầy đủ thông tin đơn hàng!");
+                return;
+            }
+
+            if (chiTietList.isEmpty()) {
+                ThongBaoUtil.canhBao("Cảnh báo", "Đơn hàng phải có ít nhất một sản phẩm!");
+                return;
+            }
+
+            String[] khachHangParts = khachHangSelection.split(" - ");
+            String maKhachHang = khachHangParts[0];
+            String tenKhachHang = khachHangParts[1];
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date ngayDat;
             try {
-                String maDonHang = taoChiTietView.getTxtMaDonHang().getText();
-                String khachHangSelection = taoChiTietView.getCbKhachHang().getValue();
-                String ngayDatStr = taoChiTietView.getTxtNgayDat().getText();
-                String trangThai = taoChiTietView.getCbTrangThai().getValue();
-                List<ChiTietDonHangDTO> chiTietList = taoChiTietView.getChiTietDonHangList();
+                ngayDat = sdf.parse(ngayDatStr);
+            } catch (Exception e) {
+                ThongBaoUtil.canhBao("Cảnh báo", "Ngày đặt phải có định dạng YYYY-MM-DD!");
+                return;
+            }
 
-                if (maDonHang == null || maDonHang.trim().isEmpty() ||
-                        khachHangSelection == null || khachHangSelection.trim().isEmpty() ||
-                        ngayDatStr == null || ngayDatStr.trim().isEmpty() ||
-                        trangThai == null) {
-                    ThongBaoUtil.canhBao("Cảnh báo", "Vui lòng điền đầy đủ thông tin đơn hàng!");
-                    return;
-                }
+            double tongTien = chiTietList.stream().mapToDouble(ct -> ct.getSoLuong() * ct.getDonGia()).sum();
 
-                if (chiTietList.isEmpty()) {
-                    ThongBaoUtil.canhBao("Cảnh báo", "Đơn hàng phải có ít nhất một sản phẩm!");
-                    return;
-                }
+            donHangDTO.setMaKhachHang(maKhachHang);
+            donHangDTO.setTenKhachHang(tenKhachHang);
+            donHangDTO.setNgayDat(ngayDat);
+            donHangDTO.setTrangThai(trangThai);
+            donHangDTO.setTongTien(tongTien);
 
-                String[] khachHangParts = khachHangSelection.split(" - ");
-                String maKhachHang = khachHangParts[0];
-                String tenKhachHang = khachHangParts[1];
+            try {
+                donHangDAO.sua(donHangDTO);
 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date ngayDat = sdf.parse(ngayDatStr);
-
-                double tongTien = chiTietList.stream().mapToDouble(ct -> ct.getSoLuong() * ct.getDonGia()).sum();
-
-                if (!ngayDatStr.matches("\\d{4}-\\d{2}-\\d{2}")) {
-                    ThongBaoUtil.canhBao("Cảnh báo", "Ngày đặt phải có định dạng YYYY-MM-DD!");
-                    return;
-                }
-
-                for (DonHangDTO dh : donHangDAO.layTatCaDonGanNhat()) {
-                    if (dh.getMaDonHang().equals(maDonHang)) {
-                        ThongBaoUtil.canhBao("Cảnh báo", "Mã đơn hàng đã tồn tại!");
-                        return;
-                    }
-                }
-
-                DonHangDTO donHangDTO = new DonHangDTO(maDonHang, maKhachHang, tenKhachHang, tongTien, ngayDat,
-                        trangThai);
-                donHangDAO.them(donHangDTO);
+                chiTietDonHangDAO.xoaTheoMaDonHang(donHangDTO.getMaDonHang());
 
                 for (ChiTietDonHangDTO chiTiet : chiTietList) {
                     String maSanPham = null;
@@ -268,24 +278,25 @@ public class TaoDonHangController {
                             break;
                         }
                     }
-                    chiTietDonHangDAO.them(maDonHang, maSanPham, chiTiet.getSoLuong(), chiTiet.getDonGia());
+                    chiTietDonHangDAO.them(donHangDTO.getMaDonHang(), maSanPham, chiTiet.getSoLuong(),
+                            chiTiet.getDonGia());
                 }
-
                 List<DonHangDTO> danhSachDonHang = new ArrayList<>();
                 QuanLyDonHangView quanLyDonHangView = new QuanLyDonHangView();
                 ChiTietDonHangView chiTietDonHangView = new ChiTietDonHangView();
                 new QuanLyDonHangController(mainView, quanLyDonHangView, chiTietDonHangView, danhSachDonHang);
 
-                ThongBaoUtil.thongTin("Thành công", "Tạo đơn hàng thành công!");
+                ThongBaoUtil.thongTin("Thành công", "Cập nhật đơn hàng thành công!");
                 mainView.setCenter(quanLyDonHangView);
                 mainView.setRight(chiTietDonHangView);
-            } catch (Exception e) {
+
+            } catch (SQLException e) {
                 ThongBaoUtil.baoLoi("Lỗi", e.getMessage());
                 e.printStackTrace();
             }
         });
 
-        taoChiTietView.getBtnHuy().setOnAction(_ -> {
+        chinhSuaChiTietView.getBtnHuy().setOnAction(_ -> {
             List<DonHangDTO> danhSachDonHang = new ArrayList<>();
             QuanLyDonHangView quanLyDonHangView = new QuanLyDonHangView();
             ChiTietDonHangView chiTietDonHangView = new ChiTietDonHangView();
@@ -297,9 +308,37 @@ public class TaoDonHangController {
     }
 
     private void updateTongTien() {
-        double tongTien = taoChiTietView.getTblChiTietDonHang().getItems().stream()
+        double tongTien = chinhSuaChiTietView.getTblChiTietDonHang().getItems().stream()
                 .mapToDouble(ct -> ct.getSoLuong() * ct.getDonGia())
                 .sum();
-        taoChiTietView.getTxtTongTien().setText(String.valueOf(tongTien));
+        chinhSuaChiTietView.getTxtTongTien().setText(String.valueOf(tongTien));
+    }
+
+    private void loadChiTietDonHang() {
+        try {
+            List<ChiTietDonHangDTO> chiTietList = chiTietDonHangDAO.layChiTietDonHangDTO(donHangDTO.getMaDonHang());
+            chinhSuaChiTietView.getTblChiTietDonHang().getItems().addAll(chiTietList);
+            double tongTien = chiTietList.stream().mapToDouble(ct -> ct.getSoLuong() * ct.getDonGia()).sum();
+            chinhSuaChiTietView.getTxtTongTien().setText(String.valueOf(tongTien));
+
+            for (ChiTietDonHangDTO chiTiet : chiTietList) {
+                for (SanPhamModel sp : danhSachSanPham) {
+                    if (sp.getTen().equals(chiTiet.getTenSanPham())) {
+                        originalSoLuong.put(sp.getMaSanPham(), chiTiet.getSoLuong());
+                        break;
+                    }
+                }
+            }
+
+            chinhSuaChiTietView.getTxtMaDonHang().setText(donHangDTO.getMaDonHang());
+            chinhSuaChiTietView.getCbKhachHang()
+                    .setValue(donHangDTO.getMaKhachHang() + " - " + donHangDTO.getTenKhachHang());
+            chinhSuaChiTietView.getCbTrangThai().setValue(donHangDTO.getTrangThai());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            chinhSuaChiTietView.getTxtNgayDat().setText(sdf.format(donHangDTO.getNgayDat()));
+        } catch (Exception e) {
+            ThongBaoUtil.baoLoi("Lỗi", "Không thể tải chi tiết đơn hàng: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

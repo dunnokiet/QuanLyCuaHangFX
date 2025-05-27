@@ -31,6 +31,7 @@ public class MainView extends BorderPane {
 
         btnNguoiDung.setDisable(!vaiTro.equals("Quản lý"));
         btnDangXuat = createNavButton("Đăng xuất");
+        btnDangXuat.getStyleClass().add("danger");
 
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
@@ -49,7 +50,13 @@ public class MainView extends BorderPane {
 
     public void setActiveButton(Button activeButton) {
 
+        btnHome.getStyleClass().remove("success");
+        btnSanPham.getStyleClass().remove("success");
+        btnKhachHang.getStyleClass().remove("success");
+        btnDonHang.getStyleClass().remove("success");
+        btnNguoiDung.getStyleClass().remove("success");
         if (activeButton != null) {
+            activeButton.getStyleClass().add("success");
 
         }
     }

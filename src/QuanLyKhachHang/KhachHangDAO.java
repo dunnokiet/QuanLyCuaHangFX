@@ -1,4 +1,4 @@
-package dao;
+package QuanLyKhachHang;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.KhachHangModel;
 import util.DatabaseConnection;
 
 public class KhachHangDAO {

@@ -44,21 +44,27 @@ public class TrangChuView extends BorderPane {
         vbxCardRevenue.setPadding(new Insets(15));
 
         Label lblRevenueTitle = new Label("Tổng doanh thu");
+        lblRevenueTitle.getStyleClass().add("title-1");
         lblRevenueValue = new Label("0 VNĐ");
+        lblRevenueValue.getStyleClass().add("title-4");
         vbxCardRevenue.getChildren().addAll(lblRevenueTitle, lblRevenueValue);
 
         VBox vbxCardOrders = new VBox(10);
         vbxCardOrders.setPadding(new Insets(15));
 
         Label lblOrdersTitle = new Label("Số đơn hàng");
+        lblOrdersTitle.getStyleClass().add("title-1");
         lblOrdersValue = new Label("0");
+        lblOrdersValue.getStyleClass().add("title-4");
         vbxCardOrders.getChildren().addAll(lblOrdersTitle, lblOrdersValue);
 
         VBox vbxCardCustomers = new VBox(10);
         vbxCardCustomers.setPadding(new Insets(15));
 
         Label lblCustomersTitle = new Label("Số khách hàng");
+        lblCustomersTitle.getStyleClass().add("title-1");
         lblCustomersValue = new Label("0");
+        lblCustomersValue.getStyleClass().add("title-4");
         vbxCardCustomers.getChildren().addAll(lblCustomersTitle, lblCustomersValue);
 
         hbxSummaryCards.getChildren().addAll(vbxCardRevenue, vbxCardOrders, vbxCardCustomers);
@@ -66,17 +72,14 @@ public class TrangChuView extends BorderPane {
         HBox hbxFilter = new HBox(16);
         hbxFilter.setAlignment(Pos.CENTER_LEFT);
 
-        // Nhãn "Trạng thái"
         Label lblStatusFilter = new Label("Trạng thái:");
 
-        // ComboBox
         cbxStatusFilter = new ComboBox<>();
         cbxStatusFilter.getItems().addAll("Tất cả", "Đã giao", "Đang xử lý", "Đã hủy");
         cbxStatusFilter.setValue("Tất cả");
-        cbxStatusFilter.setMaxWidth(Double.MAX_VALUE); // Cho phép mở rộng
+        cbxStatusFilter.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(cbxStatusFilter, Priority.ALWAYS);
 
-        // Nhãn "Từ ngày"
         Label lblStartDate = new Label("Từ ngày:");
 
         dpStartDate = new DatePicker();
@@ -92,6 +95,7 @@ public class TrangChuView extends BorderPane {
         HBox.setHgrow(dpEndDate, Priority.ALWAYS);
 
         btnApplyFilter = new Button("Áp dụng");
+        btnApplyFilter.getStyleClass().add("success");
 
         hbxFilter.getChildren().addAll(
                 lblStatusFilter, cbxStatusFilter,

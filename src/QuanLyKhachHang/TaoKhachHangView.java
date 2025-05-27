@@ -1,4 +1,4 @@
-package view.KhachHang;
+package QuanLyKhachHang;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

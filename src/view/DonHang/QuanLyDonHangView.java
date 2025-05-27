@@ -15,6 +15,8 @@ public class QuanLyDonHangView extends VBox {
     private TextField txtTimKiem;
     private TableView<DonHangDTO> tblDonHang;
     private Button btnTaoDonHang;
+    private Button btnSuaDonHang;
+    private Button btnXoaDonHang;
 
     public QuanLyDonHangView() {
         setSpacing(16);
@@ -29,8 +31,13 @@ public class QuanLyDonHangView extends VBox {
 
         btnTaoDonHang = new Button("Tạo đơn hàng");
         btnTaoDonHang.getStyleClass().add("success");
+        btnSuaDonHang = new Button("Sửa");
+        btnSuaDonHang.setDisable(true);
+        btnXoaDonHang = new Button("Xóa");
+        btnXoaDonHang.getStyleClass().add("danger");
+        btnXoaDonHang.setDisable(true);
 
-        HBox header = new HBox(10, txtTimKiem, btnTaoDonHang);
+        HBox header = new HBox(10, txtTimKiem, btnTaoDonHang, btnSuaDonHang, btnXoaDonHang);
         header.setPadding(new Insets(0, 0, 10, 0));
 
         tblDonHang = new TableView<>();
@@ -55,6 +62,12 @@ public class QuanLyDonHangView extends VBox {
 
         tblDonHang.getColumns().addAll(Arrays.asList(colMaDonHang, colTenKhachHang, colNgayDat, colTongTien));
 
+        tblDonHang.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
+            boolean hasSelection = newSelection != null;
+            btnSuaDonHang.setDisable(!hasSelection);
+            btnXoaDonHang.setDisable(!hasSelection);
+        });
+
         getChildren().addAll(lblTitle, header, tblDonHang);
     }
 
@@ -69,4 +82,14 @@ public class QuanLyDonHangView extends VBox {
     public Button getBtnTaoDonHang() {
         return btnTaoDonHang;
     }
+
+    public Button getBtnSuaDonHang() {
+        return btnSuaDonHang;
+    }
+
+    public Button getBtnXoaDonHang() {
+        return btnXoaDonHang;
+    }
+
+    
 }

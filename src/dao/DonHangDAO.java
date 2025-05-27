@@ -22,6 +22,19 @@ public class DonHangDAO {
         this.sanPhamDAO = new SanPhamDAO();
     }
 
+    public List<String> layDanhSachMaDonHang() throws SQLException {
+        List<String> maDonHangList = new ArrayList<>();
+        String query = "SELECT ma_don_hang FROM DonHang";
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                maDonHangList.add(rs.getString("ma_don_hang"));
+            }
+        }
+        return maDonHangList;
+    }
+
     public double layTongDoanhThu() throws SQLException {
         String query = "SELECT SUM(tong_tien) FROM DonHang";
         try (Connection conn = DatabaseConnection.getConnection();

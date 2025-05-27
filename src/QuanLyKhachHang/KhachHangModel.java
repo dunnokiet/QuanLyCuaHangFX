@@ -1,4 +1,4 @@
-package model;
+package QuanLyKhachHang;
 
 public class KhachHangModel {
     private String maKhachHang;

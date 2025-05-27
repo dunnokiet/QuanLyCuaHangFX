@@ -1,12 +1,7 @@
-package controller.KhachHang;
-
-import dao.KhachHangDAO;
-import model.KhachHangModel;
+package QuanLyKhachHang;
 
 import util.ThongBaoUtil;
 import view.MainView;
-import view.KhachHang.ChinhSuaKhachHangView;
-import view.KhachHang.QuanLyKhachHangView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

@@ -1,5 +1,7 @@
 package view.DonHang;
 
+import java.util.Arrays;
+
 import dto.ChiTietDonHangDTO;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,26 +13,22 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import model.SanPhamModel;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-public class TaoDonHangView extends VBox {
+public class ChinhSuaDonHangView extends VBox {
     private TableView<SanPhamModel> tblSanPham;
     private TextField txtTimKiemSanPham;
     private Button btnThemSanPham;
     private Button btnBoSanPham;
     private Button btnSuaSoLuong;
 
-    public TaoDonHangView() {
-        setPadding(new Insets(24));
+    public ChinhSuaDonHangView() {
         setSpacing(16);
+        setPadding(new Insets(24));
 
-        Label lblTitleSanPham = new Label("Danh Sách Đơn hàng");
+        Label lblTitleSanPham = new Label("Danh Sách Sản Phẩm");
         lblTitleSanPham.getStyleClass().add("title-1");
 
         txtTimKiemSanPham = new TextField();
-        txtTimKiemSanPham.setPromptText("Tìm kiếm đơn hàng...");
+        txtTimKiemSanPham.setPromptText("Tìm kiếm sản phẩm...");
         HBox.setHgrow(txtTimKiemSanPham, Priority.ALWAYS);
 
         HBox headerSanPham = new HBox(10, txtTimKiemSanPham);
@@ -69,6 +67,7 @@ public class TaoDonHangView extends VBox {
         actionButtons.setAlignment(Pos.CENTER);
 
         getChildren().addAll(lblTitleSanPham, headerSanPham, tblSanPham, actionButtons);
+
     }
 
     public TableView<SanPhamModel> getTblSanPham() {
@@ -90,4 +89,5 @@ public class TaoDonHangView extends VBox {
     public Button getBtnSuaSoLuong() {
         return btnSuaSoLuong;
     }
+
 }

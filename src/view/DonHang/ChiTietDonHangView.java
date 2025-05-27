@@ -25,8 +25,8 @@ public class ChiTietDonHangView extends VBox {
     private TableView<ChiTietDonHangDTO> tblChiTietDonHang;
 
     public ChiTietDonHangView() {
+        setSpacing(16);
         setPadding(new Insets(24));
-        setSpacing(8);
 
         lblTitle = new Label("Chi Tiết Đơn Hàng");
         lblTitle.getStyleClass().add("title-1");

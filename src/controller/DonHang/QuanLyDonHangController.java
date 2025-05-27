@@ -4,10 +4,14 @@ import dao.ChiTietDonHangDAO;
 import dao.DonHangDAO;
 import dto.ChiTietDonHangDTO;
 import dto.DonHangDTO;
+import model.DonHangModel;
 import util.ThongBaoUtil;
 import view.MainView;
 import view.DonHang.ChiTietDonHangView;
+import view.DonHang.ChinhSuaChiTietView;
+import view.DonHang.ChinhSuaDonHangView;
 import view.DonHang.QuanLyDonHangView;
+import view.DonHang.TaoChiTietView;
 import view.DonHang.TaoDonHangView;
 
 import java.sql.SQLException;
@@ -41,10 +45,47 @@ public class QuanLyDonHangController {
     private void initListeners() {
         quanLyDonHangView.getBtnTaoDonHang().setOnAction(_ -> {
             TaoDonHangView taoSanPhamView = new TaoDonHangView();
-            new TaoDonHangController(mainView, taoSanPhamView);
+            TaoChiTietView taoChiTietView = new TaoChiTietView();
+            new TaoDonHangController(mainView, taoSanPhamView, taoChiTietView);
 
             mainView.setCenter(taoSanPhamView);
-            mainView.setRight(null);
+            mainView.setRight(taoChiTietView);
+        });
+
+        quanLyDonHangView.getBtnSuaDonHang().setOnAction(_ -> {
+            DonHangDTO selected = quanLyDonHangView.getTblDonHang().getSelectionModel().getSelectedItem();
+            if (selected == null) {
+                ThongBaoUtil.canhBao("Cảnh báo", "Vui lòng chọn một đơn hàng để chỉnh sửa!");
+                return;
+            }
+            ChinhSuaDonHangView chinhSuaDonHangView = new ChinhSuaDonHangView();
+            ChinhSuaChiTietView chinhSuaChiTietView = new ChinhSuaChiTietView();
+            new ChinhSuaDonHangController(mainView, chinhSuaDonHangView, chinhSuaChiTietView, selected);
+
+            mainView.setCenter(chinhSuaDonHangView);
+            mainView.setRight(chinhSuaChiTietView);
+        });
+
+        quanLyDonHangView.getBtnXoaDonHang().setOnAction(_ -> {
+            DonHangDTO selected = quanLyDonHangView.getTblDonHang().getSelectionModel().getSelectedItem();
+            if (selected == null) {
+                ThongBaoUtil.canhBao("Cảnh báo", "Vui lòng chọn một đơn hàng để xóa!");
+                return;
+            }
+
+            boolean confirmed = ThongBaoUtil.xacNhan("Xác nhận", "Bạn có chắc chắn muốn xóa đơn hàng này?");
+            if (!confirmed)
+                return;
+
+            try {
+                chiTietDonHangDAO.xoaTheoMaDonHang(selected.getMaDonHang());
+                donHangDAO.xoa(selected.getMaDonHang());
+                loadTableData();
+                ThongBaoUtil.thongTin("Thành công", "Xóa đơn hàng thành công!");
+            } catch (SQLException e) {
+                ThongBaoUtil.baoLoi("Lỗi", "Không thể xóa đơn hàng: " + e.getMessage());
+                e.printStackTrace();
+            }
         });
 
         quanLyDonHangView.getTblDonHang().getSelectionModel().selectedItemProperty()
