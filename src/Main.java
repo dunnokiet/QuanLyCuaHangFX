@@ -18,7 +18,7 @@ public class Main extends Application {
         Scene scene = new Scene(dangNhapView, 500, 400);
         scene.getStylesheets().add(getClass().getResource("/resources/primer-light.css").toExternalForm());
 
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/shop.png")));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/store.png")));
         primaryStage.setScene(scene);
         primaryStage.setTitle("Đăng nhập - Hệ Thống Quản Lý Cửa Hàng");
         primaryStage.setResizable(false);
