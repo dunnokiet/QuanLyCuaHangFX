@@ -49,11 +49,7 @@ public class KhachHangModel {
     }
 
     public boolean isThongTinHopLe() {
-        return ten != null && !ten.isEmpty()
+        return ten != null && !ten.isEmpty() && diaChi != null && !diaChi.trim().isEmpty()
                 && (soDienThoai == null || soDienThoai.matches("^\\d{9,11}$"));
-    }
-
-    public boolean coDiaChi() {
-        return diaChi != null && !diaChi.trim().isEmpty();
     }
 }

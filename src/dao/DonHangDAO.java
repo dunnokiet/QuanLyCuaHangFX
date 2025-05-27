@@ -1,8 +1,9 @@
 package dao;
 
-import model.DonHangModel;
-import util.DatabaseConnection;
 import dto.DonHangDTO;
+import model.ChiTietDonHangModel;
+import model.SanPhamModel;
+import util.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +14,14 @@ import java.util.Date;
 import java.util.List;
 
 public class DonHangDAO {
+    private ChiTietDonHangDAO chiTietDonHangDAO;
+    private SanPhamDAO sanPhamDAO;
+
+    public DonHangDAO() {
+        this.chiTietDonHangDAO = new ChiTietDonHangDAO();
+        this.sanPhamDAO = new SanPhamDAO();
+    }
+
     public double layTongDoanhThu() throws SQLException {
         String query = "SELECT SUM(tong_tien) FROM DonHang";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -51,7 +60,8 @@ public class DonHangDAO {
 
     public List<DonHangDTO> layTatCaDonGanNhat() throws SQLException {
         List<DonHangDTO> orders = new ArrayList<>();
-        String query = "SELECT dh.ma_don_hang, kh.ten, dh.tong_tien, dh.ngay_dat, dh.trang_thai " +
+        String query = "SELECT dh.ma_don_hang, dh.ma_khach_hang, kh.ten AS ten, dh.tong_tien, dh.ngay_dat, dh.trang_thai "
+                +
                 "FROM DonHang dh " +
                 "JOIN KhachHang kh ON dh.ma_khach_hang = kh.ma_khach_hang " +
                 "ORDER BY dh.ngay_dat DESC";
@@ -60,29 +70,30 @@ public class DonHangDAO {
                 ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 String maDonHang = rs.getString("ma_don_hang");
-                String ten = rs.getString("ten");
+                String maKhachHang = rs.getString("ma_khach_hang");
+                String tenKhachHang = rs.getString("ten");
                 double tongTien = rs.getDouble("tong_tien");
                 Date ngayDat = rs.getDate("ngay_dat");
                 String trangThai = rs.getString("trang_thai");
-                orders.add(new DonHangDTO(maDonHang, ten, tongTien, ngayDat, trangThai));
+                orders.add(new DonHangDTO(maDonHang, maKhachHang, tenKhachHang, tongTien, ngayDat, trangThai));
             }
         }
         return orders;
     }
 
-    public List<DonHangDTO> layDonTheoLoc(String status, Date startDate, Date endDate)
-            throws SQLException {
+    public List<DonHangDTO> layDonTheoLoc(String status, Date startDate, Date endDate) throws SQLException {
         List<DonHangDTO> orders = new ArrayList<>();
         StringBuilder query = new StringBuilder(
-                "SELECT dh.ma_don_hang, kh.ten, dh.tong_tien, dh.ngay_dat, dh.trang_thai " +
+                "SELECT dh.ma_don_hang, dh.ma_khach_hang, kh.ten AS ten_khach_hang, dh.tong_tien, dh.ngay_dat, dh.trang_thai "
+                        +
                         "FROM DonHang dh " +
                         "JOIN KhachHang kh ON dh.ma_khach_hang = kh.ma_khach_hang " +
                         "WHERE 1=1");
 
         List<Object> params = new ArrayList<>();
-        if (status != null && !status.isEmpty()) {
+        if (status != null && !status.trim().isEmpty()) {
             query.append(" AND dh.trang_thai = ?");
-            params.add(status);
+            params.add(status.trim());
         }
         if (startDate != null) {
             query.append(" AND dh.ngay_dat >= ?");
@@ -102,67 +113,60 @@ public class DonHangDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     String maDonHang = rs.getString("ma_don_hang");
-                    String ten = rs.getString("ten");
+                    String maKhachHang = rs.getString("ma_khach_hang");
+                    String tenKhachHang = rs.getString("ten_khach_hang");
                     double tongTien = rs.getDouble("tong_tien");
                     Date ngayDat = rs.getDate("ngay_dat");
                     String trangThai = rs.getString("trang_thai");
-                    orders.add(new DonHangDTO(maDonHang, ten, tongTien, ngayDat, trangThai));
+                    orders.add(new DonHangDTO(maDonHang, maKhachHang, tenKhachHang, tongTien, ngayDat, trangThai));
                 }
             }
         }
         return orders;
     }
 
-    public void tao(DonHangModel donHang) throws SQLException {
-        String query = "INSERT INTO DonHang (ma_don_hang, ma_khach_hang, ngay_dat, tong_tien, trang_thai) " +
-                "VALUES (?, ?, ?, ?, ?)";
+    public void them(DonHangDTO donHang) throws SQLException {
+        String sql = "INSERT INTO DonHang (ma_don_hang, ma_khach_hang, ngay_dat, trang_thai, tong_tien) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, donHang.getMaDonHang());
             stmt.setString(2, donHang.getMaKhachHang());
-            stmt.setDate(3, new java.sql.Date(donHang.getNgayDat().getTime()));
-            stmt.setDouble(4, donHang.getTongTien());
-            stmt.setString(5, donHang.getTrangThai());
+            stmt.setDate(3, donHang.getNgayDat() != null ? new java.sql.Date(donHang.getNgayDat().getTime()) : null);
+            stmt.setString(4, donHang.getTrangThai());
+            stmt.setDouble(5, donHang.getTongTien());
             stmt.executeUpdate();
         }
     }
 
-    public DonHangModel layDonHangTheoMa(String maDonHang) throws SQLException {
-        String query = "SELECT * FROM DonHang WHERE ma_don_hang = ?";
+    public void sua(DonHangDTO donHang) throws SQLException {
+        String sql = "UPDATE DonHang SET ma_khach_hang = ?, ngay_dat = ?, trang_thai = ?, tong_tien = ? WHERE ma_don_hang = ?";
         try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, maDonHang);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    String maKhachHang = rs.getString("ma_khach_hang");
-                    Date ngayDat = rs.getDate("ngay_dat");
-                    double tongTien = rs.getDouble("tong_tien");
-                    String trangThai = rs.getString("trang_thai");
-                    return new DonHangModel(maDonHang, maKhachHang, ngayDat, tongTien, trangThai);
-                }
-                return null;
-            }
-        }
-    }
-
-    public void sua(DonHangModel donHang) throws SQLException {
-        String query = "UPDATE DonHang SET ma_khach_hang = ?, ngay_dat = ?, tong_tien = ?, trang_thai = ? " +
-                "WHERE ma_don_hang = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, donHang.getMaKhachHang());
-            stmt.setDate(2, new java.sql.Date(donHang.getNgayDat().getTime()));
-            stmt.setDouble(3, donHang.getTongTien());
-            stmt.setString(4, donHang.getTrangThai());
+            stmt.setDate(2, donHang.getNgayDat() != null ? new java.sql.Date(donHang.getNgayDat().getTime()) : null);
+            stmt.setString(3, donHang.getTrangThai());
+            stmt.setDouble(4, donHang.getTongTien());
             stmt.setString(5, donHang.getMaDonHang());
             stmt.executeUpdate();
         }
     }
 
     public void xoa(String maDonHang) throws SQLException {
-        String query = "DELETE FROM DonHang WHERE ma_don_hang = ?";
+        List<ChiTietDonHangModel> chiTietList = chiTietDonHangDAO.layChiTietDonHang(maDonHang);
+        for (ChiTietDonHangModel chiTiet : chiTietList) {
+            for (SanPhamModel sp : sanPhamDAO.layTatCaSanPham()) {
+                if (sp.getMaSanPham().equals(chiTiet.getMaSanPham())) {
+                    sp.setSoLuongTon(sp.getSoLuongTon() + chiTiet.getSoLuong());
+                    sanPhamDAO.sua(sp);
+                    break;
+                }
+            }
+        }
+
+        chiTietDonHangDAO.xoaTheoMaDonHang(maDonHang);
+        String sql = "DELETE FROM DonHang WHERE ma_don_hang = ?";
         try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, maDonHang);
             stmt.executeUpdate();
         }

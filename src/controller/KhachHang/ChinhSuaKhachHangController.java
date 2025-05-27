@@ -63,7 +63,7 @@ public class ChinhSuaKhachHangController {
                 new QuanLyKhachHangController(mainView, quanLyKhachHangView, danhSachKhachHang);
 
                 ThongBaoUtil.thongTin("Thành công", "Cập nhập khách hàng thành công!");
-                mainView.setContent(quanLyKhachHangView);
+                mainView.setCenter(quanLyKhachHangView);
 
             } catch (SQLException e) {
                 ThongBaoUtil.baoLoi("Lỗi", e.getMessage());
@@ -76,7 +76,7 @@ public class ChinhSuaKhachHangController {
             QuanLyKhachHangView quanLySanPhamView = new QuanLyKhachHangView();
 
             new QuanLyKhachHangController(mainView, quanLySanPhamView, danhSachSanPham);
-            mainView.setContent(quanLySanPhamView);
+            mainView.setCenter(quanLySanPhamView);
         });
     }
 }

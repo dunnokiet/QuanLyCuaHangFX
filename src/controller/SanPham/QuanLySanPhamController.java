@@ -38,7 +38,7 @@ public class QuanLySanPhamController {
             TaoSanPhamView taoSanPhamView = new TaoSanPhamView();
             new TaoSanPhamController(mainView, taoSanPhamView);
 
-            mainView.setContent(taoSanPhamView);
+            mainView.setCenter(taoSanPhamView);
         });
 
         quanLySanPhamView.getBtnSuaSanPham().setOnAction(_ -> {
@@ -55,7 +55,7 @@ public class QuanLySanPhamController {
 
                 new ChinhSuaSanPhamController(mainView, chinhSuaView, sanPhamModel);
 
-                mainView.setContent(chinhSuaView);
+                mainView.setCenter(chinhSuaView);
             } else {
                 ThongBaoUtil.canhBao("Cảnh báo", "Vui lòng chọn sản phẩm để chỉnh sửa!");
             }

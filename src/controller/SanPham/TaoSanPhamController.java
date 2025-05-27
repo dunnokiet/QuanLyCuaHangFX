@@ -77,7 +77,7 @@ public class TaoSanPhamController {
                 new QuanLySanPhamController(mainView, quanLySanPhamView, danhSachSanPham);
 
                 ThongBaoUtil.thongTin("Thành công", "Tạo sản phẩm thành công!");
-                mainView.setContent(quanLySanPhamView);
+                mainView.setCenter(quanLySanPhamView);
             } catch (SQLException e) {
                 ThongBaoUtil.baoLoi("Lỗi", e.getMessage());
                 e.printStackTrace();
@@ -89,7 +89,7 @@ public class TaoSanPhamController {
             QuanLySanPhamView quanLySanPhamView = new QuanLySanPhamView();
 
             new QuanLySanPhamController(mainView, quanLySanPhamView, danhSachSanPham);
-            mainView.setContent(quanLySanPhamView);
+            mainView.setCenter(quanLySanPhamView);
         });
     }
 

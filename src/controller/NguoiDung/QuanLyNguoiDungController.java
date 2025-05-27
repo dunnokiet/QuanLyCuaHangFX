@@ -39,7 +39,7 @@ public class QuanLyNguoiDungController {
             TaoNguoiDungView taoNguoiDungView = new TaoNguoiDungView();
             new TaoNguoiDungController(mainView, taoNguoiDungView);
 
-            mainView.setContent(taoNguoiDungView);
+            mainView.setCenter(taoNguoiDungView);
         });
 
         quanLyNguoiDungView.getBtnSuaNguoiDung().setOnAction(_ -> {
@@ -55,7 +55,7 @@ public class QuanLyNguoiDungController {
 
                 new ChinhSuaNguoiDungController(mainView, chinhSuaNguoiDungView, nguoiDungModel);
 
-                mainView.setContent(chinhSuaNguoiDungView);
+                mainView.setCenter(chinhSuaNguoiDungView);
             } else {
                 ThongBaoUtil.canhBao("Cảnh báo", "Vui lòng chọn người dùng để chỉnh sửa!");
             }

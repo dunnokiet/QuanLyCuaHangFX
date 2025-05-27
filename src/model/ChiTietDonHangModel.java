@@ -1,21 +1,27 @@
 package model;
 
 public class ChiTietDonHangModel {
-    private String tenSanPham;
+    private String maDonHang;
+    private String maSanPham;
     private int soLuong;
     private double donGia;
 
     public ChiTietDonHangModel() {
     }
 
-    public ChiTietDonHangModel(String tenSanPham, int soLuong, double donGia) {
-        this.tenSanPham = tenSanPham;
+    public ChiTietDonHangModel(String maDonHang, String maSanPham, int soLuong, double donGia) {
+        this.maDonHang = maDonHang;
+        this.maSanPham = maSanPham;
         this.soLuong = soLuong;
         this.donGia = donGia;
     }
 
-    public String getTenSanPham() {
-        return tenSanPham;
+    public String getMaDonHang() {
+        return maDonHang;
+    }
+
+    public String getMaSanPham() {
+        return maSanPham;
     }
 
     public int getSoLuong() {
@@ -24,5 +30,21 @@ public class ChiTietDonHangModel {
 
     public double getDonGia() {
         return donGia;
+    }
+
+    public void setMaDonHang(String maDonHang) {
+        this.maDonHang = maDonHang;
+    }
+
+    public void setMaSanPham(String maSanPham) {
+        this.maSanPham = maSanPham;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public void setDonGia(double donGia) {
+        this.donGia = donGia;
     }
 }

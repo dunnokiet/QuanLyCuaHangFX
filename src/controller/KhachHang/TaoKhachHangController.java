@@ -64,7 +64,7 @@ public class TaoKhachHangController {
                 new QuanLyKhachHangController(mainView, quanLyKhachHangView, danhSachKhachHang);
 
                 ThongBaoUtil.thongTin("Thành công", "Tạo khách hàng thành công!");
-                mainView.setContent(quanLyKhachHangView);
+                mainView.setCenter(quanLyKhachHangView);
 
             } catch (SQLException e) {
                 ThongBaoUtil.baoLoi("Lỗi", e.getMessage());
@@ -77,7 +77,7 @@ public class TaoKhachHangController {
             QuanLyKhachHangView quanLySanPhamView = new QuanLyKhachHangView();
 
             new QuanLyKhachHangController(mainView, quanLySanPhamView, danhSachSanPham);
-            mainView.setContent(quanLySanPhamView);
+            mainView.setCenter(quanLySanPhamView);
         });
     }
 

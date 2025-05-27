@@ -51,9 +51,10 @@ public class DangNhapController {
             }
 
             try {
-                nguoiDungModel = nguoiDungDAO.layNguoiDungTheoTen(tenDangNhap);
+                NguoiDungModel kq = nguoiDungDAO.layNguoiDungTheoTen(tenDangNhap);
 
-                if (nguoiDungModel != null && nguoiDungModel.kiemTraDangNhap(tenDangNhap, matKhau)) {
+                if (kq != null && kq.kiemTraDangNhap(tenDangNhap, matKhau)) {
+                    nguoiDungModel = kq;
 
                     MainView mainView = new MainView(nguoiDungModel.getVaiTro(), nguoiDungModel.getTenDangNhap());
                     new MainController(mainView, nguoiDungModel, primaryStage);
@@ -63,12 +64,12 @@ public class DangNhapController {
                     TrangChuView trangChuView = new TrangChuView(matKhau, tenDangNhap);
                     new TrangChuController(trangChuView);
 
-                    mainView.setContent(trangChuView);
+                    mainView.setCenter(trangChuView);
 
                     double centerX = primaryStage.getX() + primaryStage.getWidth() / 2;
                     double centerY = primaryStage.getY() + primaryStage.getHeight() / 2;
 
-                    Scene scene = new Scene(mainView);
+                    Scene scene = new Scene(mainView, 1280, 720);
                     scene.getStylesheets()
                             .add(getClass().getResource("../resources/primer-light.css").toExternalForm());
                     primaryStage.setScene(scene);

@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -65,24 +66,38 @@ public class TrangChuView extends BorderPane {
         HBox hbxFilter = new HBox(16);
         hbxFilter.setAlignment(Pos.CENTER_LEFT);
 
+        // Nhãn "Trạng thái"
         Label lblStatusFilter = new Label("Trạng thái:");
+
+        // ComboBox
         cbxStatusFilter = new ComboBox<>();
         cbxStatusFilter.getItems().addAll("Tất cả", "Đã giao", "Đang xử lý", "Đã hủy");
         cbxStatusFilter.setValue("Tất cả");
+        cbxStatusFilter.setMaxWidth(Double.MAX_VALUE); // Cho phép mở rộng
+        HBox.setHgrow(cbxStatusFilter, Priority.ALWAYS);
 
+        // Nhãn "Từ ngày"
         Label lblStartDate = new Label("Từ ngày:");
+
         dpStartDate = new DatePicker();
         dpStartDate.setValue(java.time.LocalDate.now().minusDays(30));
+        dpStartDate.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(dpStartDate, Priority.ALWAYS);
 
         Label lblEndDate = new Label("Đến ngày:");
 
         dpEndDate = new DatePicker();
         dpEndDate.setValue(java.time.LocalDate.now());
+        dpEndDate.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(dpEndDate, Priority.ALWAYS);
 
         btnApplyFilter = new Button("Áp dụng");
 
-        hbxFilter.getChildren().addAll(lblStatusFilter, cbxStatusFilter, lblStartDate, dpStartDate, lblEndDate,
-                dpEndDate, btnApplyFilter);
+        hbxFilter.getChildren().addAll(
+                lblStatusFilter, cbxStatusFilter,
+                lblStartDate, dpStartDate,
+                lblEndDate, dpEndDate,
+                btnApplyFilter);
 
         tblRecentOrders = new TableView<>();
         tblRecentOrders.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
