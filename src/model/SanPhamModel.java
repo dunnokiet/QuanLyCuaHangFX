@@ -57,4 +57,15 @@ public class SanPhamModel {
     public void setSoLuongTon(int soLuongTon) {
         this.soLuongTon = soLuongTon;
     }
+
+    public double tongGiaTriTonKho() {
+        return gia * soLuongTon;
+    }
+
+    public boolean isThongTinHopLe() {
+        return maSanPham != null && !maSanPham.isEmpty() &&
+                ten != null && !ten.isEmpty()
+                && loai != null && !loai.isEmpty()
+                && gia > 0 && soLuongTon >= 0;
+    }
 }

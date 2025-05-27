@@ -9,6 +9,9 @@ public class DonHangModel {
     private double tongTien;
     private String trangThai;
 
+    public DonHangModel() {
+    }
+
     public DonHangModel(String maDonHang, String maKhachHang, Date ngayDat, double tongTien, String trangThai) {
         this.maDonHang = maDonHang;
         this.maKhachHang = maKhachHang;

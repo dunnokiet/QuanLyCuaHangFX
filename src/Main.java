@@ -14,7 +14,10 @@ public class Main extends Application {
         DangNhapView dangNhapView = new DangNhapView();
         new DangNhapController(dangNhapView, nguoiDungModel, primaryStage);
 
-        primaryStage.setScene(new Scene(dangNhapView, 400, 300));
+        Scene scene = new Scene(dangNhapView, 500, 400);
+        scene.getStylesheets().add(getClass().getResource("/resources/primer-light.css").toExternalForm());
+
+        primaryStage.setScene(scene);
         primaryStage.setTitle("Đăng nhập - Hệ Thống Quản Lý Cửa Hàng");
         primaryStage.setResizable(false);
         primaryStage.show();

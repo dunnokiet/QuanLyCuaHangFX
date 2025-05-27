@@ -1,14 +1,12 @@
-package controller;
+package controller.SanPham;
 
 import dao.SanPhamDAO;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import model.SanPhamModel;
 import util.ThongBaoUtil;
 import view.MainView;
-import view.sanpham.ChinhSuaSanPhamView;
-import view.sanpham.QuanLySanPhamView;
-import view.sanpham.TaoSanPhamView;
+import view.SanPham.ChinhSuaSanPhamView;
+import view.SanPham.QuanLySanPhamView;
+import view.SanPham.TaoSanPhamView;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -36,8 +34,10 @@ public class QuanLySanPhamController {
 
     private void initListeners() {
         quanLySanPhamView.getBtnTaoSanPham().setOnAction(_ -> {
+
             TaoSanPhamView taoSanPhamView = new TaoSanPhamView();
             new TaoSanPhamController(mainView, taoSanPhamView);
+
             mainView.setContent(taoSanPhamView);
         });
 

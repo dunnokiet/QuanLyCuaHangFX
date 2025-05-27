@@ -4,14 +4,15 @@ public class KhachHangModel {
     private String maKhachHang;
     private String ten;
     private String soDienThoai;
-    private String dienThoai;
     private String diaChi;
 
-    public KhachHangModel(String maKhachHang, String ten, String soDienThoai, String dienThoai, String diaChi) {
+    public KhachHangModel() {
+    }
+
+    public KhachHangModel(String maKhachHang, String ten, String soDienThoai, String diaChi) {
         this.maKhachHang = maKhachHang;
         this.ten = ten;
         this.soDienThoai = soDienThoai;
-        this.dienThoai = dienThoai;
         this.diaChi = diaChi;
     }
 
@@ -39,19 +40,20 @@ public class KhachHangModel {
         this.soDienThoai = soDienThoai;
     }
 
-    public String getDienThoai() {
-        return dienThoai;
-    }
-
-    public void setDienThoai(String dienThoai) {
-        this.dienThoai = dienThoai;
-    }
-
     public String getDiaChi() {
         return diaChi;
     }
 
     public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
+    }
+
+    public boolean isThongTinHopLe() {
+        return ten != null && !ten.isEmpty()
+                && (soDienThoai == null || soDienThoai.matches("^\\d{9,11}$"));
+    }
+
+    public boolean coDiaChi() {
+        return diaChi != null && !diaChi.trim().isEmpty();
     }
 }

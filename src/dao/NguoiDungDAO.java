@@ -10,21 +10,25 @@ import util.DatabaseConnection;
 import java.sql.PreparedStatement;
 
 public class NguoiDungDAO {
-    public NguoiDungModel dangNhap(String tenDangNhap, String matKhau) throws SQLException {
-        String sql = "SELECT * FROM NguoiDung WHERE ten_dang_nhap = ? AND mat_khau = ?";
+    public NguoiDungModel layNguoiDungTheoTen(String tenDangNhap) throws SQLException {
+        String query = "SELECT * FROM NguoiDung WHERE ten_dang_nhap = ?";
+
         try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, tenDangNhap);
-            pstmt.setString(2, matKhau);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                return new NguoiDungModel(
-                        rs.getString("ma_nguoi_dung"),
-                        rs.getString("ten_dang_nhap"),
-                        rs.getString("mat_khau"),
-                        rs.getString("vai_tro"));
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, tenDangNhap);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new NguoiDungModel(
+                            rs.getString("ma_nguoi_dung"),
+                            rs.getString("ten_dang_nhap"),
+                            rs.getString("mat_khau"),
+                            rs.getString("vai_tro"));
+                }
             }
         }
+
         return null;
     }
+
 }

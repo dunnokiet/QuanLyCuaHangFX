@@ -48,4 +48,21 @@ public class NguoiDungModel {
         this.vaiTro = vaiTro;
     }
 
+    public boolean isQuanLy() {
+        return "Quản lý".equalsIgnoreCase(vaiTro);
+    }
+
+    public boolean isNhanVien() {
+        return "nhân viên".equalsIgnoreCase(vaiTro);
+    }
+
+    public boolean isThongTinHopLe() {
+        return tenDangNhap != null && !tenDangNhap.isEmpty()
+                && matKhau != null && matKhau.length() >= 6;
+    }
+
+    public boolean kiemTraDangNhap(String tenDangNhapInput, String matKhauInput) {
+        return this.tenDangNhap.equals(tenDangNhapInput)
+                && this.matKhau.equals(matKhauInput);
+    }
 }

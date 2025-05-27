@@ -3,15 +3,20 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.KhachHang.QuanLyKhachHangController;
+import controller.SanPham.QuanLySanPhamController;
+import controller.TrangChu.TrangChuController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.KhachHangModel;
 import model.NguoiDungModel;
 import model.SanPhamModel;
 import util.ThongBaoUtil;
 import view.DangNhapView;
 import view.MainView;
-import view.sanpham.QuanLySanPhamView;
-import view.trangchu.TrangChuView;
+import view.KhachHang.QuanLyKhachHangView;
+import view.SanPham.QuanLySanPhamView;
+import view.TrangChu.TrangChuView;
 
 public class MainController {
     private MainView mainView;
@@ -50,6 +55,16 @@ public class MainController {
             mainView.setContent(quanLySanPhamView);
         });
 
+        mainView.getBtnKhachHang().setOnAction(_ -> {
+            mainView.setActiveButton(mainView.getBtnKhachHang());
+
+            List<KhachHangModel> danhSachKhachHang = new ArrayList<>();
+            QuanLyKhachHangView quanLyKhachHangView = new QuanLyKhachHangView();
+
+            new QuanLyKhachHangController(mainView, quanLyKhachHangView, danhSachKhachHang);
+            mainView.setContent(quanLyKhachHangView);
+        });
+
         mainView.getBtnDangXuat().setOnAction(_ -> {
             if (ThongBaoUtil.xacNhan("Đăng xuất", "Bạn có chắc chắn muốn đăng xuất?")) {
                 nguoiDungModel.setMaNguoiDung(null);
@@ -63,7 +78,9 @@ public class MainController {
                 double centerX = primaryStage.getX() + primaryStage.getWidth() / 2;
                 double centerY = primaryStage.getY() + primaryStage.getHeight() / 2;
 
-                primaryStage.setScene(new Scene(dangNhapView, 400, 300));
+                Scene scene = new Scene(dangNhapView, 500, 400);
+                scene.getStylesheets().add(getClass().getResource("../resources/primer-light.css").toExternalForm());
+                primaryStage.setScene(scene);
                 primaryStage.setTitle("Đăng nhập - Hệ Thống Quản Lý Cửa Hàng");
 
                 primaryStage.sizeToScene();

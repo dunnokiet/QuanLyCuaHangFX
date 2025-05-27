@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 
 public class DangNhapView extends VBox {
     private TextField txtTenDangNhap;
@@ -16,36 +15,30 @@ public class DangNhapView extends VBox {
     private Label lblThongBao;
 
     public DangNhapView() {
+        setSpacing(20);
         setAlignment(Pos.CENTER);
-        setSpacing(8);
         setPadding(new Insets(24));
-        setStyle("-fx-background-color: #ffffff;");
 
-        Label lblTitle = new Label("Đăng nhập");
-        lblTitle.setFont(new Font("Arial", 20));
-        lblTitle.setStyle("-fx-text-fill: #333;");
+        Label lblTitle = new Label("Đăng Nhập");
+        lblTitle.getStyleClass().add("title-1");
 
+        Label lblTenDangNhap = new Label("Tên đăng nhập");
         txtTenDangNhap = new TextField();
         txtTenDangNhap.setPromptText("Tên đăng nhập");
-        txtTenDangNhap.setMaxWidth(250);
-        txtTenDangNhap.setStyle(
-                "-fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10; -fx-font-size: 14;");
+        VBox tenDangNhapBox = new VBox(4, lblTenDangNhap, txtTenDangNhap);
 
+        Label lblMatKhau = new Label("Mật khẩu");
         pwdMatKhau = new PasswordField();
         pwdMatKhau.setPromptText("Mật khẩu");
-        pwdMatKhau.setMaxWidth(250);
-        pwdMatKhau.setStyle(
-                "-fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10; -fx-font-size: 14;");
+        VBox matKhauBox = new VBox(4, lblMatKhau, pwdMatKhau);
 
         btnDangNhap = new Button("Đăng nhập");
-        btnDangNhap.setPrefWidth(250);
-        btnDangNhap.setStyle(
-                "-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-size: 14; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");
+        btnDangNhap.getStyleClass().add("success");
 
         lblThongBao = new Label("");
-        lblThongBao.setStyle("-fx-text-fill: #d32f2f; -fx-font-size: 12;");
+        lblThongBao.getStyleClass().add("warning");
 
-        getChildren().addAll(lblTitle, txtTenDangNhap, pwdMatKhau, btnDangNhap, lblThongBao);
+        getChildren().addAll(lblTitle, tenDangNhapBox, matKhauBox, btnDangNhap, lblThongBao);
     }
 
     public TextField getTxtTenDangNhap() {

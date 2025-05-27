@@ -1,8 +1,10 @@
-package view.sanpham;
+package view.SanPham;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -12,49 +14,53 @@ public class ChinhSuaSanPhamView extends VBox {
     private TextField txtLoai;
     private TextField txtGia;
     private TextField txtSoLuongTon;
+
     private Button btnLuu;
     private Button btnHuy;
-    private Label lblThongBao;
 
     public ChinhSuaSanPhamView() {
-        super(8);
+        setSpacing(8);
         setPadding(new Insets(20));
-        setStyle("-fx-background-color: #ffffff;");
 
-        Label lblTitle = new Label("Chỉnh sửa sản phẩm");
-        lblTitle.setStyle("-fx-font-size: 18; -fx-text-fill: #333;");
+        Label lblTitle = new Label("Chỉnh Sửa Sản Phẩm");
+        lblTitle.getStyleClass().addAll("title-1");
+
+        Label lblMaSanPham = new Label("Mã sản phẩm");
 
         txtMaSanPham = new TextField();
         txtMaSanPham.setPromptText("Mã sản phẩm");
-        txtMaSanPham.setEditable(false);
+        txtMaSanPham.setDisable(true);
+        VBox maSanPhamBox = new VBox(4, lblMaSanPham, txtMaSanPham);
 
+        Label lblTenSanPham = new Label("Tên sản phẩm");
         txtTenSanPham = new TextField();
         txtTenSanPham.setPromptText("Tên sản phẩm");
-        txtTenSanPham.setPrefWidth(300);
+        VBox tenSanPhamBox = new VBox(4, lblTenSanPham, txtTenSanPham);
 
+        Label lblLoai = new Label("Loại");
         txtLoai = new TextField();
         txtLoai.setPromptText("Loại");
-        txtLoai.setPrefWidth(300);
+        VBox loaiBox = new VBox(4, lblLoai, txtLoai);
 
+        Label lblGia = new Label("Giá (VNĐ)");
         txtGia = new TextField();
         txtGia.setPromptText("Giá (VNĐ)");
-        txtGia.setPrefWidth(300);
+        VBox giaBox = new VBox(4, lblGia, txtGia);
 
+        Label lblSoLuongTon = new Label("Số lượng tồn");
         txtSoLuongTon = new TextField();
         txtSoLuongTon.setPromptText("Số lượng tồn");
-        txtSoLuongTon.setPrefWidth(300);
+        VBox soLuongTonBox = new VBox(4, lblSoLuongTon, txtSoLuongTon);
 
         btnLuu = new Button("Lưu");
+        btnLuu.getStyleClass().add("success");
         btnHuy = new Button("Hủy");
-        btnLuu.setStyle(
-                "-fx-background-color: #1e90ff; -fx-text-fill: white; -fx-font-weight: bold;");
-        btnHuy.setStyle(
-                "-fx-background-color: #e0e0e0; -fx-text-fill: #000; -fx-fnt-weight:bold;");
+        btnHuy.getStyleClass().add("danger");
 
         HBox buttonBox = new HBox(8, btnHuy, btnLuu);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
 
-        getChildren().addAll(lblTitle, txtMaSanPham, txtTenSanPham, txtLoai, txtGia, txtSoLuongTon, buttonBox);
+        getChildren().addAll(lblTitle, maSanPhamBox, tenSanPhamBox, loaiBox, giaBox, soLuongTonBox, buttonBox);
     }
 
     public TextField getTxtMaSanPham() {
@@ -83,9 +89,5 @@ public class ChinhSuaSanPhamView extends VBox {
 
     public Button getBtnHuy() {
         return btnHuy;
-    }
-
-    public Label getLblThongBao() {
-        return lblThongBao;
     }
 }

@@ -1,4 +1,4 @@
-package view.sanpham;
+package view.SanPham;
 
 import java.util.Arrays;
 
@@ -13,41 +13,33 @@ import model.SanPhamModel;
 public class QuanLySanPhamView extends VBox {
     private TextField txtTimKiem;
     private TableView<SanPhamModel> tblSanPham;
-    private Label lblThongBao;
     private Button btnTaoSanPham;
     private Button btnSuaSanPham;
     private Button btnXoaSanPham;
 
     public QuanLySanPhamView() {
-        super(16);
-
-        Label lblTitle = new Label("Danh sách sản phẩm");
-        lblTitle.setStyle("-fx-text-fill: #000;");
-
+        setSpacing(16);
         setPadding(new Insets(24));
-        setStyle("-fx-background-color: #ffffff;");
 
-        HBox header = new HBox(10);
+        Label lblTitle = new Label("Quản Lý Sản Phẩm");
+        lblTitle.getStyleClass().add("title-1");
+
         txtTimKiem = new TextField();
         txtTimKiem.setPromptText("Tìm kiếm sản phẩm...");
         HBox.setHgrow(txtTimKiem, Priority.ALWAYS);
 
         btnTaoSanPham = new Button("Tạo sản phẩm");
-        btnTaoSanPham.setStyle("-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold");
-
+        btnTaoSanPham.getStyleClass().add("success");
         btnSuaSanPham = new Button("Sửa");
-        btnSuaSanPham.setStyle("-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold");
         btnSuaSanPham.setDisable(true);
-
         btnXoaSanPham = new Button("Xóa");
-        btnXoaSanPham.setStyle("-fx-background-color: #d32f2f; -fx-text-fill: white; -fx-font-weight: bold");
+        btnXoaSanPham.getStyleClass().add("danger");
         btnXoaSanPham.setDisable(true);
 
-        header.getChildren().addAll(txtTimKiem, btnTaoSanPham, btnSuaSanPham, btnXoaSanPham);
+        HBox header = new HBox(10, txtTimKiem, btnTaoSanPham, btnSuaSanPham, btnXoaSanPham);
         header.setPadding(new Insets(0, 0, 10, 0));
 
         tblSanPham = new TableView<>();
-        tblSanPham.setStyle("-fx-border-color: #e0e0e0;");
         tblSanPham.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         setVgrow(tblSanPham, Priority.ALWAYS);
 
@@ -84,10 +76,6 @@ public class QuanLySanPhamView extends VBox {
 
     public TableView<SanPhamModel> getTblSanPham() {
         return tblSanPham;
-    }
-
-    public Label getLblThongBao() {
-        return lblThongBao;
     }
 
     public Button getBtnTaoSanPham() {

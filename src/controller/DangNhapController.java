@@ -3,18 +3,21 @@ package controller;
 import model.NguoiDungModel;
 import view.DangNhapView;
 import view.MainView;
-import view.trangchu.TrangChuView;
+import view.TrangChu.TrangChuView;
 import dao.NguoiDungDAO;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
 
+import controller.TrangChu.TrangChuController;
 import util.ThongBaoUtil;
 
 public class DangNhapController {
     private DangNhapView dangNhapView;
     private NguoiDungModel nguoiDungModel;
+
+    private NguoiDungDAO nguoiDungDAO;
 
     private Stage primaryStage;
 
@@ -23,6 +26,8 @@ public class DangNhapController {
         this.nguoiDungModel = nguoiDungModel;
 
         this.primaryStage = primaryStage;
+
+        nguoiDungDAO = new NguoiDungDAO();
 
         initListeners();
     }
@@ -38,9 +43,9 @@ public class DangNhapController {
             }
 
             try {
-                nguoiDungModel = new NguoiDungDAO().dangNhap(tenDangNhap, matKhau);
+                nguoiDungModel = nguoiDungDAO.layNguoiDungTheoTen(tenDangNhap);
 
-                if (nguoiDungModel != null) {
+                if (nguoiDungModel != null && nguoiDungModel.kiemTraDangNhap(tenDangNhap, matKhau)) {
 
                     MainView mainView = new MainView(nguoiDungModel.getVaiTro(), nguoiDungModel.getTenDangNhap());
                     new MainController(mainView, nguoiDungModel, primaryStage);
@@ -55,7 +60,10 @@ public class DangNhapController {
                     double centerX = primaryStage.getX() + primaryStage.getWidth() / 2;
                     double centerY = primaryStage.getY() + primaryStage.getHeight() / 2;
 
-                    primaryStage.setScene(new Scene(mainView));
+                    Scene scene = new Scene(mainView);
+                    scene.getStylesheets()
+                            .add(getClass().getResource("../resources/primer-light.css").toExternalForm());
+                    primaryStage.setScene(scene);
                     primaryStage.setTitle("Hệ Thống Quản Lý Cửa Hàng");
 
                     primaryStage.sizeToScene();

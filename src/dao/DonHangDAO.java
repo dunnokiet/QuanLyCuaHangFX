@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 public class DonHangDAO {
-    public double getTotalRevenue() throws SQLException {
+    public double layTongDoanhThu() throws SQLException {
         String query = "SELECT SUM(tong_tien) FROM DonHang";
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query);
@@ -25,7 +25,7 @@ public class DonHangDAO {
         }
     }
 
-    public int getOrderCount() throws SQLException {
+    public int laySoLuongDonHang() throws SQLException {
         String query = "SELECT COUNT(*) FROM DonHang";
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query);
@@ -37,7 +37,7 @@ public class DonHangDAO {
         }
     }
 
-    public int getCustomerCount() throws SQLException {
+    public int laySoLuongKhachHang() throws SQLException {
         String query = "SELECT COUNT(DISTINCT ma_khach_hang) FROM DonHang";
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query);
@@ -49,7 +49,7 @@ public class DonHangDAO {
         }
     }
 
-    public List<DonHangDTO> getRecentDonHang() throws SQLException {
+    public List<DonHangDTO> layTatCaDonGanNhat() throws SQLException {
         List<DonHangDTO> orders = new ArrayList<>();
         String query = "SELECT dh.ma_don_hang, kh.ten, dh.tong_tien, dh.ngay_dat, dh.trang_thai " +
                 "FROM DonHang dh " +
@@ -70,7 +70,7 @@ public class DonHangDAO {
         return orders;
     }
 
-    public List<DonHangDTO> getDonHangByFilter(String status, Date startDate, Date endDate)
+    public List<DonHangDTO> layDonTheoLoc(String status, Date startDate, Date endDate)
             throws SQLException {
         List<DonHangDTO> orders = new ArrayList<>();
         StringBuilder query = new StringBuilder(
@@ -113,7 +113,7 @@ public class DonHangDAO {
         return orders;
     }
 
-    public void create(DonHangModel donHang) throws SQLException {
+    public void tao(DonHangModel donHang) throws SQLException {
         String query = "INSERT INTO DonHang (ma_don_hang, ma_khach_hang, ngay_dat, tong_tien, trang_thai) " +
                 "VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -127,7 +127,7 @@ public class DonHangDAO {
         }
     }
 
-    public DonHangModel read(String maDonHang) throws SQLException {
+    public DonHangModel layDonHangTheoMa(String maDonHang) throws SQLException {
         String query = "SELECT * FROM DonHang WHERE ma_don_hang = ?";
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -145,7 +145,7 @@ public class DonHangDAO {
         }
     }
 
-    public void update(DonHangModel donHang) throws SQLException {
+    public void sua(DonHangModel donHang) throws SQLException {
         String query = "UPDATE DonHang SET ma_khach_hang = ?, ngay_dat = ?, tong_tien = ?, trang_thai = ? " +
                 "WHERE ma_don_hang = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -159,7 +159,7 @@ public class DonHangDAO {
         }
     }
 
-    public void delete(String maDonHang) throws SQLException {
+    public void xoa(String maDonHang) throws SQLException {
         String query = "DELETE FROM DonHang WHERE ma_don_hang = ?";
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
