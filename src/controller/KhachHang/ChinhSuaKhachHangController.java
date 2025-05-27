@@ -45,14 +45,14 @@ public class ChinhSuaKhachHangController {
                 return;
             }
 
+            khachHangModel.setTen(tenKhachHang);
+            khachHangModel.setSoDienThoai(soDienThoai);
+            khachHangModel.setDiaChi(diaChi);
+
             if (!khachHangModel.isThongTinHopLe()) {
                 ThongBaoUtil.canhBao("Cảnh báo", "Thông tin khách hàng không hợp lệ!");
                 return;
             }
-
-            khachHangModel.setTen(tenKhachHang);
-            khachHangModel.setSoDienThoai(soDienThoai);
-            khachHangModel.setDiaChi(diaChi);
 
             try {
                 khachHangDAO.sua(khachHangModel);

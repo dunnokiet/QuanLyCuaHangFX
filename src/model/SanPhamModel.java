@@ -58,7 +58,7 @@ public class SanPhamModel {
         this.soLuongTon = soLuongTon;
     }
 
-    public double tongGiaTriTonKho() {
+    public double tinhTienTonKho() {
         return gia * soLuongTon;
     }
 

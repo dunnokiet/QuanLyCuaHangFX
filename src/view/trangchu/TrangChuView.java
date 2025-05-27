@@ -97,7 +97,7 @@ public class TrangChuView extends BorderPane {
         colTotal.setCellValueFactory(cellData -> {
             double tongTien = cellData.getValue().getTongTien();
             return javafx.beans.binding.Bindings
-                    .createStringBinding(() -> new DecimalFormat("#,### VNĐ").format(tongTien));
+                    .createStringBinding(() -> new DecimalFormat("#,###").format(tongTien));
         });
 
         TableColumn<DonHangDTO, String> colDate = new TableColumn<>("Ngày đặt");

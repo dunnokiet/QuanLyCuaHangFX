@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import controller.KhachHang.QuanLyKhachHangController;
+import controller.NguoiDung.QuanLyNguoiDungController;
 import controller.SanPham.QuanLySanPhamController;
 import controller.TrangChu.TrangChuController;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ import util.ThongBaoUtil;
 import view.DangNhapView;
 import view.MainView;
 import view.KhachHang.QuanLyKhachHangView;
+import view.NguoiDung.QuanLyNguoiDungView;
 import view.SanPham.QuanLySanPhamView;
 import view.TrangChu.TrangChuView;
 
@@ -63,6 +65,16 @@ public class MainController {
 
             new QuanLyKhachHangController(mainView, quanLyKhachHangView, danhSachKhachHang);
             mainView.setContent(quanLyKhachHangView);
+        });
+
+        mainView.getBtnNguoiDung().setOnAction(_ -> {
+            mainView.setActiveButton(mainView.getBtnNguoiDung());
+
+            List<NguoiDungModel> danhSachNguoiDung = new ArrayList<>();
+            QuanLyNguoiDungView quanLyNguoiDungView = new QuanLyNguoiDungView();
+
+            new QuanLyNguoiDungController(mainView, quanLyNguoiDungView, danhSachNguoiDung);
+            mainView.setContent(quanLyNguoiDungView);
         });
 
         mainView.getBtnDangXuat().setOnAction(_ -> {

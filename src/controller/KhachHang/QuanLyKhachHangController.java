@@ -66,13 +66,13 @@ public class QuanLyKhachHangController {
 
             if (khachHangModel != null) {
                 if (ThongBaoUtil.xacNhan("Xác nhận",
-                        "Bạn có chắc chăn muốn xóa sản phẩm \"%s\" không?".formatted(khachHangModel.getTen()))) {
+                        "Bạn có chắc chăn muốn xóa khách hàng \"%s\" không?".formatted(khachHangModel.getTen()))) {
 
                     try {
                         khachHangDAO.xoa(khachHangModel.getMaKhachHang());
                         loadTableData();
                         ThongBaoUtil.thongTin("Thành công",
-                                "Xóa sản phẩm \"%s\" thành công!".formatted(khachHangModel.getTen()));
+                                "Xóa khách hàng \"%s\" thành công!".formatted(khachHangModel.getTen()));
                     } catch (SQLException e) {
                         ThongBaoUtil.thongTin("Lỗi", e.getMessage());
                         e.printStackTrace();
@@ -80,7 +80,7 @@ public class QuanLyKhachHangController {
                 }
 
             } else {
-                ThongBaoUtil.canhBao("Cảnh báo", "Vui lòng chọn sản phẩm để xóa!");
+                ThongBaoUtil.canhBao("Cảnh báo", "Vui lòng chọn khách hàng để xóa!");
             }
         });
 

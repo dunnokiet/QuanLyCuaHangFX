@@ -1,5 +1,6 @@
 package view.SanPham;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
 import javafx.geometry.Insets;
@@ -52,14 +53,26 @@ public class QuanLySanPhamView extends VBox {
         TableColumn<SanPhamModel, String> colLoai = new TableColumn<>("Loại");
         colLoai.setCellValueFactory(new PropertyValueFactory<>("loai"));
 
-        TableColumn<SanPhamModel, Double> colGia = new TableColumn<>("Giá");
-        colGia.setCellValueFactory(new PropertyValueFactory<>("gia"));
+        TableColumn<SanPhamModel, String> colGia = new TableColumn<>("Giá");
+        colGia.setCellValueFactory(cellData -> {
+            double gia = cellData.getValue().getGia();
+            return javafx.beans.binding.Bindings
+                    .createStringBinding(() -> new DecimalFormat("#,###").format(gia));
+        });
 
         TableColumn<SanPhamModel, Integer> colSoLuongTon = new TableColumn<>("Số lượng tồn");
         colSoLuongTon.setCellValueFactory(new PropertyValueFactory<>("soLuongTon"));
 
+        TableColumn<SanPhamModel, String> colTienTonKho = new TableColumn<>("Tiền tồn kho");
+        colTienTonKho.setCellValueFactory(cellData -> {
+            double tienTonKho = cellData.getValue().tinhTienTonKho();
+            return javafx.beans.binding.Bindings
+                    .createStringBinding(() -> new DecimalFormat("#,###").format(tienTonKho));
+        });
+
         tblSanPham.getColumns()
-                .addAll(Arrays.asList(colMaSanPham, colTenSanPham, colLoai, colGia, colSoLuongTon));
+                .addAll(Arrays.asList(colMaSanPham, colTenSanPham, colLoai, colGia, colSoLuongTon,
+                        colTienTonKho));
 
         tblSanPham.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
             boolean hasSelection = newSelection != null;

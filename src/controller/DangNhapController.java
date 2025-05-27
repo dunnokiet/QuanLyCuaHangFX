@@ -42,6 +42,14 @@ public class DangNhapController {
                 return;
             }
 
+            nguoiDungModel.setTenDangNhap(tenDangNhap);
+            nguoiDungModel.setMatKhau(matKhau);
+
+            if (!nguoiDungModel.isThongTinHopLe()) {
+                dangNhapView.getLblThongBao().setText("Thông tin người dùng không hợp lệ.");
+                return;
+            }
+
             try {
                 nguoiDungModel = nguoiDungDAO.layNguoiDungTheoTen(tenDangNhap);
 
