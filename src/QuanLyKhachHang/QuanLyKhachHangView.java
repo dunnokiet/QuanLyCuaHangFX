@@ -57,11 +57,7 @@ public class QuanLyKhachHangView extends VBox {
         tblKhachHang.getColumns()
                 .addAll(Arrays.asList(colMaKhachHang, colTenKhachHang, colSoDienThoai, colDiaChi));
 
-        tblKhachHang.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
-            boolean hasSelection = newSelection != null;
-            btnSuaKhachHang.setDisable(!hasSelection);
-            btnXoaKhachHang.setDisable(!hasSelection);
-        });
+     
 
         getChildren().addAll(lblTitle, header, tblKhachHang);
     }

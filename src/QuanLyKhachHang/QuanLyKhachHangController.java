@@ -28,6 +28,13 @@ public class QuanLyKhachHangController {
     }
 
     private void initListeners() {
+        quanLyKhachHangView.getTblKhachHang().getSelectionModel().selectedItemProperty()
+                .addListener((_, _, newSelection) -> {
+                    boolean hasSelection = newSelection != null;
+                    quanLyKhachHangView.getBtnSuaKhachHang().setDisable(!hasSelection);
+                    quanLyKhachHangView.getBtnXoaKhachHang().setDisable(!hasSelection);
+                });
+
         quanLyKhachHangView.getBtnTaoKhachHang().setOnAction(_ -> {
 
             TaoKhachHangView taoKhachHangView = new TaoKhachHangView();
