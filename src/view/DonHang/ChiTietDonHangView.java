@@ -25,6 +25,7 @@ public class ChiTietDonHangView extends VBox {
     private TableView<ChiTietDonHangDTO> tblChiTietDonHang;
 
     public ChiTietDonHangView() {
+        setPrefWidth(400);
         setSpacing(16);
         setPadding(new Insets(24));
 
@@ -63,9 +64,38 @@ public class ChiTietDonHangView extends VBox {
         lblMaDonHang.setText("Mã đơn hàng: " + donHang.getMaDonHang());
         lblTenKhachHang.setText("Khách hàng: " + donHang.getTenKhachHang());
         lblNgayDat.setText("Ngày đặt: " + donHang.getNgayDat());
-        lblTongTien.setText("Tổng tiền: " + new DecimalFormat("#,###").format(donHang.getTongTien()));
+        lblTongTien.setText("Tổng tiền: " + new DecimalFormat("#,###").format(donHang.getTongTien()) + " VNĐ");
         lblTrangThai.setText("Trạng thái: " + donHang.getNgayDat());
         tblChiTietDonHang.getItems().clear();
         tblChiTietDonHang.getItems().addAll(chiTietList);
     }
+
+    public Label getLblTitle() {
+        return lblTitle;
+    }
+
+    public Label getLblMaDonHang() {
+        return lblMaDonHang;
+    }
+
+    public Label getLblTenKhachHang() {
+        return lblTenKhachHang;
+    }
+
+    public Label getLblNgayDat() {
+        return lblNgayDat;
+    }
+
+    public Label getLblTongTien() {
+        return lblTongTien;
+    }
+
+    public Label getLblTrangThai() {
+        return lblTrangThai;
+    }
+
+    public TableView<ChiTietDonHangDTO> getTblChiTietDonHang() {
+        return tblChiTietDonHang;
+    }
+
 }

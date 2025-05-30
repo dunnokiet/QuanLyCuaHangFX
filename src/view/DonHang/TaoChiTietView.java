@@ -1,5 +1,6 @@
 package view.DonHang;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +27,7 @@ public class TaoChiTietView extends VBox {
     private Button btnHuy;
 
     public TaoChiTietView() {
+        setPrefWidth(400);
         setSpacing(16);
         setPadding(new Insets(24));
 
@@ -68,10 +70,14 @@ public class TaoChiTietView extends VBox {
         TableColumn<ChiTietDonHangDTO, Integer> colChiTietSoLuong = new TableColumn<>("Số lượng");
         colChiTietSoLuong.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
 
-        TableColumn<ChiTietDonHangDTO, Double> colChiTietDonGia = new TableColumn<>("Đơn giá");
-        colChiTietDonGia.setCellValueFactory(new PropertyValueFactory<>("donGia"));
+        TableColumn<ChiTietDonHangDTO, String> colDonGia = new TableColumn<>("Đơn giá");
+        colDonGia.setCellValueFactory(cellData -> {
+            double donGia = cellData.getValue().getDonGia();
+            return javafx.beans.binding.Bindings
+                    .createStringBinding(() -> new DecimalFormat("#,###").format(donGia));
+        });
 
-        tblChiTietDonHang.getColumns().addAll(Arrays.asList(colChiTietTenSanPham, colChiTietSoLuong, colChiTietDonGia));
+        tblChiTietDonHang.getColumns().addAll(Arrays.asList(colChiTietTenSanPham, colChiTietSoLuong, colDonGia));
 
         btnTao = new Button("Tạo");
         btnTao.getStyleClass().add("success");

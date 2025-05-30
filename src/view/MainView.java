@@ -3,6 +3,7 @@ package view;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -17,11 +18,14 @@ public class MainView extends BorderPane {
     private Button btnNguoiDung;
     private Button btnDangXuat;
 
-    public MainView(String vaiTro, String tenDangNhap) {
+    public MainView(boolean isQuanLy, String tenDangNhap) {
         thanhDieuHuong = new VBox(8);
         thanhDieuHuong.setPadding(new Insets(24));
         thanhDieuHuong.setAlignment(Pos.TOP_LEFT);
         thanhDieuHuong.setSpacing(10);
+
+        Label lblTitle = new Label("Chào " + tenDangNhap);
+        lblTitle.getStyleClass().add("title-3");
 
         btnHome = createNavButton("Trang chủ");
         btnSanPham = createNavButton("Sản phẩm");
@@ -29,15 +33,19 @@ public class MainView extends BorderPane {
         btnDonHang = createNavButton("Đơn hàng");
         btnNguoiDung = createNavButton("Người dùng");
 
-        btnNguoiDung.setDisable(!vaiTro.equals("Quản lý"));
         btnDangXuat = createNavButton("Đăng xuất");
         btnDangXuat.getStyleClass().add("danger");
 
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
 
-        thanhDieuHuong.getChildren().addAll(btnHome, btnSanPham, btnKhachHang, btnDonHang, btnNguoiDung, spacer,
-                btnDangXuat);
+        if (isQuanLy)
+            thanhDieuHuong.getChildren().addAll(lblTitle, btnHome, btnSanPham, btnKhachHang, btnDonHang, btnNguoiDung,
+                    spacer,
+                    btnDangXuat);
+        else
+            thanhDieuHuong.getChildren().addAll(lblTitle, btnHome, btnSanPham, btnKhachHang, btnDonHang, spacer,
+                    btnDangXuat);
 
         setLeft(thanhDieuHuong);
     }

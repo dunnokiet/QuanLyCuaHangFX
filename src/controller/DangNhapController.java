@@ -56,7 +56,7 @@ public class DangNhapController {
                 if (kq != null && kq.kiemTraDangNhap(tenDangNhap, matKhau)) {
                     nguoiDungModel = kq;
 
-                    MainView mainView = new MainView(nguoiDungModel.getVaiTro(), nguoiDungModel.getTenDangNhap());
+                    MainView mainView = new MainView(nguoiDungModel.isQuanLy(), nguoiDungModel.getTenDangNhap());
                     new MainController(mainView, nguoiDungModel, primaryStage);
 
                     mainView.setActiveButton(mainView.getBtnHome());
@@ -69,7 +69,7 @@ public class DangNhapController {
                     double centerX = primaryStage.getX() + primaryStage.getWidth() / 2;
                     double centerY = primaryStage.getY() + primaryStage.getHeight() / 2;
 
-                    Scene scene = new Scene(mainView, 1280, 720);
+                    Scene scene = new Scene(mainView, 1420, 720);
                     scene.getStylesheets()
                             .add(getClass().getResource("../resources/primer-light.css").toExternalForm());
                     primaryStage.setScene(scene);

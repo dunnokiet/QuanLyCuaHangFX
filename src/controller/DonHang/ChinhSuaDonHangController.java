@@ -15,6 +15,7 @@ import view.DonHang.ChinhSuaDonHangView;
 import view.DonHang.QuanLyDonHangView;
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -311,7 +312,7 @@ public class ChinhSuaDonHangController {
         double tongTien = chinhSuaChiTietView.getTblChiTietDonHang().getItems().stream()
                 .mapToDouble(ct -> ct.getSoLuong() * ct.getDonGia())
                 .sum();
-        chinhSuaChiTietView.getTxtTongTien().setText(String.valueOf(tongTien));
+        chinhSuaChiTietView.getTxtTongTien().setText(new DecimalFormat("#,###").format(tongTien) + " VNĐ");
     }
 
     private void loadChiTietDonHang() {
@@ -319,7 +320,7 @@ public class ChinhSuaDonHangController {
             List<ChiTietDonHangDTO> chiTietList = chiTietDonHangDAO.layChiTietDonHangDTO(donHangDTO.getMaDonHang());
             chinhSuaChiTietView.getTblChiTietDonHang().getItems().addAll(chiTietList);
             double tongTien = chiTietList.stream().mapToDouble(ct -> ct.getSoLuong() * ct.getDonGia()).sum();
-            chinhSuaChiTietView.getTxtTongTien().setText(String.valueOf(tongTien));
+            chinhSuaChiTietView.getTxtTongTien().setText(new DecimalFormat("#,###").format(tongTien) + " VNĐ");
 
             for (ChiTietDonHangDTO chiTiet : chiTietList) {
                 for (SanPhamModel sp : danhSachSanPham) {

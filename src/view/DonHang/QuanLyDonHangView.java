@@ -60,7 +60,11 @@ public class QuanLyDonHangView extends VBox {
                     .createStringBinding(() -> new DecimalFormat("#,###").format(tongTien));
         });
 
-        tblDonHang.getColumns().addAll(Arrays.asList(colMaDonHang, colTenKhachHang, colNgayDat, colTongTien));
+        TableColumn<DonHangDTO, Integer> colTrangThai = new TableColumn<>("Trạng thái");
+        colTrangThai.setCellValueFactory(new PropertyValueFactory<>("trangThai"));
+
+        tblDonHang.getColumns()
+                .addAll(Arrays.asList(colMaDonHang, colTenKhachHang, colNgayDat, colTongTien, colTrangThai));
 
         tblDonHang.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
             boolean hasSelection = newSelection != null;
@@ -91,5 +95,4 @@ public class QuanLyDonHangView extends VBox {
         return btnXoaDonHang;
     }
 
-    
 }

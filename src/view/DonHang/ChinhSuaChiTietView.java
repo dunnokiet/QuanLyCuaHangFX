@@ -1,5 +1,6 @@
 package view.DonHang;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +27,7 @@ public class ChinhSuaChiTietView extends VBox {
     private Button btnHuy;
 
     public ChinhSuaChiTietView() {
+        setPrefWidth(400);
         setSpacing(16);
         setPadding(new Insets(24));
 
@@ -55,6 +57,7 @@ public class ChinhSuaChiTietView extends VBox {
 
         Label lblTongTien = new Label("Tổng tiền");
         txtTongTien = new TextField();
+        txtTongTien.getStyleClass().add("title-3");
         txtTongTien.setPromptText("Tổng tiền");
         txtTongTien.setDisable(true);
         VBox tongTienBox = new VBox(4, lblTongTien, txtTongTien);
@@ -69,10 +72,14 @@ public class ChinhSuaChiTietView extends VBox {
         TableColumn<ChiTietDonHangDTO, Integer> colChiTietSoLuong = new TableColumn<>("Số lượng");
         colChiTietSoLuong.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
 
-        TableColumn<ChiTietDonHangDTO, Double> colChiTietDonGia = new TableColumn<>("Đơn giá");
-        colChiTietDonGia.setCellValueFactory(new PropertyValueFactory<>("donGia"));
+        TableColumn<ChiTietDonHangDTO, String> colDonGia = new TableColumn<>("Đơn giá");
+        colDonGia.setCellValueFactory(cellData -> {
+            double donGia = cellData.getValue().getDonGia();
+            return javafx.beans.binding.Bindings
+                    .createStringBinding(() -> new DecimalFormat("#,###").format(donGia));
+        });
 
-        tblChiTietDonHang.getColumns().addAll(Arrays.asList(colChiTietTenSanPham, colChiTietSoLuong, colChiTietDonGia));
+        tblChiTietDonHang.getColumns().addAll(Arrays.asList(colChiTietTenSanPham, colChiTietSoLuong, colDonGia));
 
         btnLuu = new Button("Lưu");
         btnLuu.getStyleClass().add("success");

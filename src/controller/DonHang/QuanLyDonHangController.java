@@ -4,7 +4,6 @@ import dao.ChiTietDonHangDAO;
 import dao.DonHangDAO;
 import dto.ChiTietDonHangDTO;
 import dto.DonHangDTO;
-import model.DonHangModel;
 import util.ThongBaoUtil;
 import view.MainView;
 import view.DonHang.ChiTietDonHangView;
@@ -81,6 +80,12 @@ public class QuanLyDonHangController {
                 chiTietDonHangDAO.xoaTheoMaDonHang(selected.getMaDonHang());
                 donHangDAO.xoa(selected.getMaDonHang());
                 loadTableData();
+                chiTietDonHangView.getLblMaDonHang().setText("Mã đơn hàng: ");
+                chiTietDonHangView.getLblTenKhachHang().setText("Khách hàng: ");
+                chiTietDonHangView.getLblNgayDat().setText("Ngày đặt: ");
+                chiTietDonHangView.getLblTongTien().setText("Tổng tiền: ");
+                chiTietDonHangView.getLblTrangThai().setText("Trạng thái: ");
+                chiTietDonHangView.getTblChiTietDonHang().getItems().clear();
                 ThongBaoUtil.thongTin("Thành công", "Xóa đơn hàng thành công!");
             } catch (SQLException e) {
                 ThongBaoUtil.baoLoi("Lỗi", "Không thể xóa đơn hàng: " + e.getMessage());

@@ -129,6 +129,8 @@ public class TrangChuView extends BorderPane {
         TableColumn<DonHangDTO, String> colStatus = new TableColumn<>("Trạng thái");
         colStatus.setCellValueFactory(new PropertyValueFactory<>("trangThai"));
 
+        VBox.setVgrow(tblRecentOrders, Priority.ALWAYS);
+
         tblRecentOrders.getColumns().addAll(Arrays.asList(colOrderId, colCustomer, colTotal, colDate, colStatus));
 
         vbxContent.getChildren().addAll(hbxSummaryCards, hbxFilter,

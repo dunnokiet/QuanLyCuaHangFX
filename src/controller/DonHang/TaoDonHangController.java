@@ -15,6 +15,7 @@ import view.DonHang.QuanLyDonHangView;
 import view.DonHang.TaoDonHangView;
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -300,6 +301,6 @@ public class TaoDonHangController {
         double tongTien = taoChiTietView.getTblChiTietDonHang().getItems().stream()
                 .mapToDouble(ct -> ct.getSoLuong() * ct.getDonGia())
                 .sum();
-        taoChiTietView.getTxtTongTien().setText(String.valueOf(tongTien));
+        taoChiTietView.getTxtTongTien().setText(new DecimalFormat("#,###").format(tongTien) + " VNĐ");
     }
 }

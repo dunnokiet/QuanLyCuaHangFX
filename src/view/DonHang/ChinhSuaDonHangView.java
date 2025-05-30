@@ -1,13 +1,12 @@
 package view.DonHang;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
-import dto.ChiTietDonHangDTO;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -24,7 +23,7 @@ public class ChinhSuaDonHangView extends VBox {
         setSpacing(16);
         setPadding(new Insets(24));
 
-        Label lblTitleSanPham = new Label("Danh Sách Sản Phẩm");
+        Label lblTitleSanPham = new Label("Chỉnh Sửa Đơn Hàng");
         lblTitleSanPham.getStyleClass().add("title-1");
 
         txtTimKiemSanPham = new TextField();
@@ -47,8 +46,12 @@ public class ChinhSuaDonHangView extends VBox {
         TableColumn<SanPhamModel, Integer> colSoLuongTon = new TableColumn<>("Tồn kho");
         colSoLuongTon.setCellValueFactory(new PropertyValueFactory<>("soLuongTon"));
 
-        TableColumn<SanPhamModel, Double> colGia = new TableColumn<>("Giá");
-        colGia.setCellValueFactory(new PropertyValueFactory<>("gia"));
+        TableColumn<SanPhamModel, String> colGia = new TableColumn<>("Giá");
+        colGia.setCellValueFactory(cellData -> {
+            double donGia = cellData.getValue().getGia();
+            return javafx.beans.binding.Bindings
+                    .createStringBinding(() -> new DecimalFormat("#,###").format(donGia));
+        });
 
         tblSanPham.getColumns().addAll(Arrays.asList(colMaSanPham, colTenSanPham, colSoLuongTon, colGia));
 

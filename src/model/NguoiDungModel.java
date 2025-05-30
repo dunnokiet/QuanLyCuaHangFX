@@ -53,7 +53,7 @@ public class NguoiDungModel {
     }
 
     public boolean isNhanVien() {
-        return "nhân viên".equalsIgnoreCase(vaiTro);
+        return "Nhân viên".equalsIgnoreCase(vaiTro);
     }
 
     public boolean isThongTinHopLe() {
