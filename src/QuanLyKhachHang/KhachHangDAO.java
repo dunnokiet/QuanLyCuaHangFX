@@ -12,7 +12,7 @@ import util.DatabaseConnection;
 
 public class KhachHangDAO {
     public void them(KhachHangModel khachHang) throws SQLException {
-        String sql = "INSERT INTO KhachHang (ma_khach_hang, ten, so_dien_thoai, dia_chi) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO KhachHang (ma_khach_hang, ten, so_dien_thoai, dia_chi) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, khachHang.getMaKhachHang());

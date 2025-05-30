@@ -13,7 +13,7 @@ import java.sql.PreparedStatement;
 
 public class NguoiDungDAO {
     public void them(NguoiDungModel nguoiDung) throws SQLException {
-        String sql = "INSERT INTO NguoiDung (ma_nguoi_dung, ten_dang_nhap, mat_khau, vai_tro) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO NguoiDung (ma_nguoi_dung, ten_dang_nhap, mat_khau, vai_tro) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, nguoiDung.getMaNguoiDung());
