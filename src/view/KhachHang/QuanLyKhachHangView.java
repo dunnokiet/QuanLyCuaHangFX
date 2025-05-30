@@ -1,4 +1,4 @@
-package QuanLyKhachHang;
+package view.KhachHang;
 
 import java.util.Arrays;
 
@@ -8,6 +8,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import model.KhachHangModel;
 
 public class QuanLyKhachHangView extends VBox {
     private TextField txtTimKiem;

@@ -1,11 +1,17 @@
-package QuanLyKhachHang;
+package controller.KhachHang;
 
 import util.ThongBaoUtil;
 import view.MainView;
+import view.KhachHang.ChinhSuaKhachHangView;
+import view.KhachHang.QuanLyKhachHangView;
+import view.KhachHang.TaoKhachHangView;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import dao.KhachHangDAO;
+import model.KhachHangModel;
 
 public class QuanLyKhachHangController {
     private MainView mainView;

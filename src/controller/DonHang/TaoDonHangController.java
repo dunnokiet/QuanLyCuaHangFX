@@ -1,11 +1,13 @@
 package controller.DonHang;
 
 import dao.DonHangDAO;
+import dao.KhachHangDAO;
 import dao.ChiTietDonHangDAO;
 import dao.SanPhamDAO;
 import dto.ChiTietDonHangDTO;
 import dto.DonHangDTO;
 import javafx.scene.control.TextInputDialog;
+import model.KhachHangModel;
 import model.SanPhamModel;
 import util.ThongBaoUtil;
 import view.MainView;
@@ -22,9 +24,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import QuanLyKhachHang.KhachHangDAO;
-import QuanLyKhachHang.KhachHangModel;
 
 public class TaoDonHangController {
     private TaoDonHangView taoDonHangView;
