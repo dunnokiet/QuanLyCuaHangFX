@@ -24,7 +24,7 @@ public class ChinhSuaNguoiDungView extends VBox {
         super(8);
         setPadding(new Insets(20));
 
-        Label lblTitle = new Label("Chỉnh Sửa Người Dùng Mới");
+        Label lblTitle = new Label("Chỉnh Sửa Người Dùng");
         lblTitle.getStyleClass().add("title-1");
 
         Label lblMaNguoiDung = new Label("Mã người dùng");

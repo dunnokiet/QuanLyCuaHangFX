@@ -18,7 +18,7 @@ public class TaoKhachHangView extends VBox {
         setSpacing(8);
         setPadding(new Insets(24));
 
-        Label lblTitle = new Label("Tạo khách hàng mới");
+        Label lblTitle = new Label("Tạo Khách Hàng Mới");
         lblTitle.getStyleClass().add("title-1");
 
         Label lblMaKhachHang = new Label("Mã khách hàng");

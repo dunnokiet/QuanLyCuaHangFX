@@ -23,7 +23,7 @@ public class TaoDonHangView extends VBox {
         setPadding(new Insets(24));
         setSpacing(16);
 
-        Label lblTitleSanPham = new Label("Tạo Đơn Hàng");
+        Label lblTitleSanPham = new Label("Tạo Đơn Hàng Mới");
         lblTitleSanPham.getStyleClass().add("title-1");
 
         txtTimKiemSanPham = new TextField();
