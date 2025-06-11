@@ -17,7 +17,7 @@ Dự án yêu cầu:
 - JavaFX 24: Lấy từ trang chính chủ chính [JavaFX](https://openjfx.io/).
 - JDBC: Tải xuống từ đây [Microsoft JDBC Driver for SQL Server](https://learn.microsoft.com/vi-vn/sql/connect/jdbc/download-microsoft-jdbc-driver-for-sql-server?view=sql-server-ver16).
 
-## Cài Đặt VÀ Chạy Trên VSCode
+## Cài Đặt Và Chạy Trên VSCode
 
 Thực hiện theo từng bước:
 
@@ -53,4 +53,5 @@ Không gian làm việc mặc định chứa hai thư mục, trong đó:
 Trong khi đó, các tệp kết quả biên dịch sẽ được tạo trong thư mục `bin` theo mặc định.
 
 ## Đóng Góp
+
 Mọi đóng góp đều được hoan nghênh. Vui lòng fork dự án và gửi pull request. Bạn cũng có thể mở issue nếu phát hiện lỗi hoặc cần hỗ trợ thêm.
